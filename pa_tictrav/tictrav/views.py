@@ -51,3 +51,6 @@ class ViewPDF(View):
 def ticket(request):
      return render(request, 'ticket.html')
 
+def desc(request):
+     return render(request, 'desc.html')
+
