@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from tictrav import views
-from tictrav.views import login, register, index, ticket,desc
+from tictrav.views import login, register, index, ticket,desc,coba
 
 
 urlpatterns = [
@@ -12,4 +12,5 @@ urlpatterns = [
     path('desc/', desc),
     path('ticket/', ticket),
     path('ticketpdf/', views.ViewPDF.as_view(), name="pdf_view"),
+    path('coba/', coba),
 ]

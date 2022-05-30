@@ -54,3 +54,5 @@ def ticket(request):
 def desc(request):
      return render(request, 'desc.html')
 
+def coba(request):
+     return render(request, 'coba.html')
