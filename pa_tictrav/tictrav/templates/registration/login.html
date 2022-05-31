@@ -33,15 +33,16 @@
         <div class="form-content">
           <div class="login-form">
             <div class="title">Login</div>
-          <form action="#">
+          <form method="post">
+            {% csrf_token %}
             <div class="input-boxes">
               <div class="input-box">
                 <i class="fas fa-user"></i>
-                <input type="text" placeholder="Enter your email" required>
+                <input type="text" placeholder="Nama Pengguna" name="username" required id="id_username">
               </div>
               <div class="input-box">
                 <i class="fas fa-lock"></i>
-                <input type="password" placeholder="Enter your password" required>
+                <input type="password" placeholder="Kata Sandi" name="password" required id="id_password">
               </div>
               <div class="text"><a href="#">Forgot password?</a></div>
               <div class="button input-box">

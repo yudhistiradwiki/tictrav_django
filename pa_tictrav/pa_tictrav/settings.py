@@ -130,4 +130,4 @@ STATICFILES_DIRS = [
 
 LOGIN_REDIRECT_URL = '/desc'
 
-LOGIN_URL = '/masuk'
+LOGIN_URL = '/login'

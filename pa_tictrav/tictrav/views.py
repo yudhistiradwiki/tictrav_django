@@ -26,9 +26,14 @@ def register(request):
      return render(request, 'register.html')
 
 #Home
-@login_required(login_url=settings.LOGIN_URL)
 def index(request):
      return render(request, 'index.html')
+
+
+#Home
+@login_required(login_url=settings.LOGIN_URL)
+def home(request):
+     return render(request, 'home.html')
 
 #Ticket
 
