@@ -6,13 +6,12 @@ from django.contrib.auth.views import LoginView, LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', login),
+    path('login/', LoginView.as_view(), name='masuk'),
+    path('logout/', LogoutView.as_view(next_page='/masuk'), name='keluar'),
     path('register/', register),
     path('', index),
     path('desc/', desc),
     path('ticket/', ticket),
     path('ticketpdf/', views.ViewPDF.as_view(), name="pdf_view"),
-    path('coba/', coba),
-    path('masuk/', LoginView.as_view(), name='masuk'),
-    path('keluar/', LogoutView.as_view(next_page='/masuk'), name='keluar'),
+    path('coba/', desc),
 ]

@@ -21,6 +21,13 @@
                 <li class="nav__item">
                     <a href="/login" class="nav__link">Masuk Akun</a>
                 </li>
+
+                {% if user.is_authenticated %}
+                <li class="nav__item">
+                    <a href="/keluar" class="nav__link">{{ user }}</a>
+                </li>
+                {% endif %}
+                
             </ul>
 
             <div class="nav__dark">
