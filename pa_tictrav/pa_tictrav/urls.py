@@ -14,5 +14,5 @@ urlpatterns = [
     path('ticketpdf/', views.ViewPDF.as_view(), name="pdf_view"),
     path('coba/', coba),
     path('masuk/', LoginView.as_view(), name='masuk'),
-    path('keluar/', LogoutView.as_view(), name='keluar'),
+    path('keluar/', LogoutView.as_view(next_page='/masuk'), name='keluar'),
 ]
