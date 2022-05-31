@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <!-- Created by CodingLab |www.youtube.com/c/CodingLabYT-->
 <html lang="en" dir="ltr">
@@ -11,6 +12,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    </head>
 <body>
+{% if user.is_authenticated %}
+  <meta http-equiv="refresh" content="0; url="{% url '/desc' %}">
+{% else %}
+
   <div class="container">
     <input type="checkbox" id="flip">
     <div class="cover">
@@ -78,5 +83,8 @@
     </div>
     </div>
   </div>
+
+
+{% endif %}
 </body>
 </html>
