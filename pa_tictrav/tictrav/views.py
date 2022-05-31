@@ -4,6 +4,9 @@ from io import BytesIO
 from django.views import View
 from django.template.loader import get_template
 from xhtml2pdf import pisa
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 # Create your views here.
 
@@ -23,6 +26,7 @@ def register(request):
      return render(request, 'register.html')
 
 #Home
+@login_required(login_url=settings.LOGIN_URL)
 def index(request):
      return render(request, 'index.html')
 
