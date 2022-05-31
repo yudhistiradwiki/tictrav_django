@@ -25,7 +25,7 @@ SECRET_KEY = 'y%398dkj8mhyk2%+8p!nplzn43@%b-lbd(tgghoq_5_922wd39'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -78,10 +78,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'tictrav',
-        'USER': 'yudhistiradwiki',
-        'PASSWORD': 'TRPL2k19',
-        'HOST': 'localhost',
-        'PORT': ''
+        'USER': "postgres",
+        'PASSWORD': "12345",
+        'HOST': "localhost",
+        'PORT': 5432,
     }
 }
 
@@ -104,6 +104,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Autentikasi Backend Remote dan Umum
+
+AUTHENTICATION_BACKENDS = [
+        'django.contrib.auth.backends.RemoteUserBackend',
+        'django.contrib.auth.backends.ModelBackend',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
@@ -119,6 +125,18 @@ USE_L10N = True
 USE_TZ = False
 
 
+# Custom Autentikasi
+
+AUTH_USER_MODEL = 'tictrav.AccountCustom'
+
+# Session autentikasi
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# Penggunaan auto field increment
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
@@ -127,6 +145,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 LOGIN_REDIRECT_URL = '/desc'
 

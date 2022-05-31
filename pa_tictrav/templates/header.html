@@ -1,12 +1,12 @@
 {% load static %}
 <header class="header" id="header">
     <nav class="nav container">
-        <a href="index.html" class="nav__logo">TicTrav</a>
+        <a href="{% url 'tictrav:home' %}" class="nav__logo">TicTrav</a>
 
         <div class="nav__menu" id="nav-menu">
             <ul class="nav__list">
                 <li class="nav__item">
-                    <a href="/" class="nav__link active-link">Beranda</a>
+                    <a href="{% url 'tictrav:home' %}" class="nav__link active-link">Beranda</a>
                 </li>
                 <li class="nav__item">
                     <a href="#place" class="nav__link">Rekomendasi</a>
@@ -19,13 +19,13 @@
                 </li>
                 
                 <li class="nav__item">
-                    <a href="/login" class="nav__link">Masuk Akun</a>
+                    <a href="{% url 'tictrav:masuk' %}" class="nav__link">Masuk Akun</a>
                 </li>
 
                 {% if user.is_authenticated %}
-                <li class="nav__item">
-                    <a href="/logout" class="nav__link">{{ user }}</a>
-                </li>
+                    <li class="nav__item">
+                        <a href="{% url 'tictrav:keluar' %}" class="nav__link">{{ user }}</a>
+                    </li>
                 {% endif %}
                 
             </ul>

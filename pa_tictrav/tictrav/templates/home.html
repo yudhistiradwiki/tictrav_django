@@ -29,7 +29,7 @@
                     <div class="home__info">
                         <div>
                             <span class="home__info-title">5 best places to visit in Indonesia</span>
-                            <a href="deskirpsi.html" class="button button--flex button--link home__info-button">
+                            <a href="{% url 'tictrav:deskripsi' %}" class="button button--flex button--link home__info-button">
                                 More <i class="ri-arrow-right-line"></i>
                             </a>
                         </div>
@@ -41,122 +41,124 @@
                 </div>
             </section>
 
-            <!--==================== PLACES ====================-->
-            <section class="place section" id="place">
-                <h2 class="section__title">Rekomendasi untuk anda</h2>
+            {% if user.is_authenticated %}
+                <!--==================== PLACES ====================-->
+                <section class="place section" id="place">
+                    <h2 class="section__title">Rekomendasi untuk anda</h2>
 
-                <div class="place__container container grid">
-                    <!--==================== PLACES CARD 1 ====================-->
-                    <div class="place__card">
-                        <img src="{% static 'img/place1.jpg' %}" alt="" class="place__img">
-                        
-                        <div class="place__content">
-                            <span class="place__rating">
-                                <i class="ri-star-line place__rating-icon"></i>
-                                <span class="place__rating-number">4,8</span>
-                            </span>
+                    <div class="place__container container grid">
+                        <!--==================== PLACES CARD 1 ====================-->
+                        <div class="place__card">
+                            <img src="{% static 'img/place1.jpg' %}" alt="" class="place__img">
+                            
+                            <div class="place__content">
+                                <span class="place__rating">
+                                    <i class="ri-star-line place__rating-icon"></i>
+                                    <span class="place__rating-number">4,8</span>
+                                </span>
 
-                            <div class="place__data">
-                                <h3 class="place__title">Pantai Kuta, Bali</h3>
-                                <span class="place__subtitle">Indonesia</span>
-                                <span class="place__price">Rp 20.000,-</span>
+                                <div class="place__data">
+                                    <h3 class="place__title">Pantai Kuta, Bali</h3>
+                                    <span class="place__subtitle">Indonesia</span>
+                                    <span class="place__price">Rp 20.000,-</span>
+                                </div>
                             </div>
+
+                            <button class="button button--flex place__button">
+                                <i class="ri-arrow-right-line"></i>
+                            </button>
                         </div>
 
-                        <button class="button button--flex place__button">
-                            <i class="ri-arrow-right-line"></i>
-                        </button>
-                    </div>
+                        <!--==================== PLACES CARD 2 ====================-->
+                        <div class="place__card">
+                            <img src="{% static 'img/zoo.jpg' %}" alt="" class="place__img">
+                            
+                            <div class="place__content">
+                                <span class="place__rating">
+                                    <i class="ri-star-line place__rating-icon"></i>
+                                    <span class="place__rating-number">5,0</span>
+                                </span>
 
-                    <!--==================== PLACES CARD 2 ====================-->
-                    <div class="place__card">
-                        <img src="{% static 'img/zoo.jpg' %}" alt="" class="place__img">
-                        
-                        <div class="place__content">
-                            <span class="place__rating">
-                                <i class="ri-star-line place__rating-icon"></i>
-                                <span class="place__rating-number">5,0</span>
-                            </span>
-
-                            <div class="place__data">
-                                <h3 class="place__title">Zoo Logical Garden, Bandung</h3>
-                                <span class="place__subtitle">Indonesia</span>
-                                <span class="place__price">Rp 25.000,-</span>
+                                <div class="place__data">
+                                    <h3 class="place__title">Zoo Logical Garden, Bandung</h3>
+                                    <span class="place__subtitle">Indonesia</span>
+                                    <span class="place__price">Rp 25.000,-</span>
+                                </div>
                             </div>
+
+                            <button class="button button--flex place__button">
+                                <i class="ri-arrow-right-line"></i>
+                            </button>
                         </div>
 
-                        <button class="button button--flex place__button">
-                            <i class="ri-arrow-right-line"></i>
-                        </button>
-                    </div>
+                        <!--==================== PLACES CARD 3 ====================-->
+                        <div class="place__card">
+                            <img src="{% static 'img/Bukit.jpg' %}" alt="" class="place__img">
+                            
+                            <div class="place__content">
+                                <span class="place__rating">
+                                    <i class="ri-star-line place__rating-icon"></i>
+                                    <span class="place__rating-number">4,9</span>
+                                </span>
 
-                    <!--==================== PLACES CARD 3 ====================-->
-                    <div class="place__card">
-                        <img src="{% static 'img/Bukit.jpg' %}" alt="" class="place__img">
-                        
-                        <div class="place__content">
-                            <span class="place__rating">
-                                <i class="ri-star-line place__rating-icon"></i>
-                                <span class="place__rating-number">4,9</span>
-                            </span>
-
-                            <div class="place__data">
-                                <h3 class="place__title">Bukit Mojo, Yogyakart</h3>
-                                <span class="place__subtitle">Indonesia</span>
-                                <span class="place__price">Rp 5.000,- </span>
+                                <div class="place__data">
+                                    <h3 class="place__title">Bukit Mojo, Yogyakart</h3>
+                                    <span class="place__subtitle">Indonesia</span>
+                                    <span class="place__price">Rp 5.000,- </span>
+                                </div>
                             </div>
+
+                            <button class="button button--flex place__button">
+                                <i class="ri-arrow-right-line"></i>
+                            </button>
                         </div>
 
-                        <button class="button button--flex place__button">
-                            <i class="ri-arrow-right-line"></i>
-                        </button>
-                    </div>
+                        <!--==================== PLACES CARD 4 ====================-->
+                        <div class="place__card">
+                            <img src="{% static 'img/dufan.jpg' %}" alt="" class="place__img">
+                            
+                            <div class="place__content">
+                                <span class="place__rating">
+                                    <i class="ri-star-line place__rating-icon"></i>
+                                    <span class="place__rating-number">5,0</span>
+                                </span>
 
-                    <!--==================== PLACES CARD 4 ====================-->
-                    <div class="place__card">
-                        <img src="{% static 'img/dufan.jpg' %}" alt="" class="place__img">
-                        
-                        <div class="place__content">
-                            <span class="place__rating">
-                                <i class="ri-star-line place__rating-icon"></i>
-                                <span class="place__rating-number">5,0</span>
-                            </span>
-
-                            <div class="place__data">
-                                <h3 class="place__title">Dunia Fantasy, Jakarta</h3>
-                                <span class="place__subtitle">Indonesia</span>
-                                <span class="place__price">Rp 248.500,-</span>
+                                <div class="place__data">
+                                    <h3 class="place__title">Dunia Fantasy, Jakarta</h3>
+                                    <span class="place__subtitle">Indonesia</span>
+                                    <span class="place__price">Rp 248.500,-</span>
+                                </div>
                             </div>
+
+                            <button class="button button--flex place__button">
+                                <i class="ri-arrow-right-line"></i>
+                            </button>
                         </div>
 
-                        <button class="button button--flex place__button">
-                            <i class="ri-arrow-right-line"></i>
-                        </button>
-                    </div>
+                        <!--==================== PLACES CARD 5 ====================-->
+                        <div class="place__card">
+                            <img src="{% static 'img/tamansafarri2.jpg' %}" alt="" class="place__img">
+                            
+                            <div class="place__content">
+                                <span class="place__rating">
+                                    <i class="ri-star-line place__rating-icon"></i>
+                                    <span class="place__rating-number">4,8</span>
+                                </span>
 
-                    <!--==================== PLACES CARD 5 ====================-->
-                    <div class="place__card">
-                        <img src="{% static 'img/tamansafarri2.jpg' %}" alt="" class="place__img">
-                        
-                        <div class="place__content">
-                            <span class="place__rating">
-                                <i class="ri-star-line place__rating-icon"></i>
-                                <span class="place__rating-number">4,8</span>
-                            </span>
-
-                            <div class="place__data">
-                                <h3 class="place__title">Taman Safari, Bogor</h3>
-                                <span class="place__subtitle">Indonesia</span>
-                                <span class="place__price">Rp 200.000,-</span>
+                                <div class="place__data">
+                                    <h3 class="place__title">Taman Safari, Bogor</h3>
+                                    <span class="place__subtitle">Indonesia</span>
+                                    <span class="place__price">Rp 200.000,-</span>
+                                </div>
                             </div>
-                        </div>
 
-                        <button class="button button--flex place__button">
-                            <i class="ri-arrow-right-line"></i>
-                        </button>
+                            <button class="button button--flex place__button">
+                                <i class="ri-arrow-right-line"></i>
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            {% endif %}
 
             <!--==================== ABOUT ====================-->
             <section class="about section" id="about">
@@ -166,7 +168,7 @@
                         <p class="about__description">Kamu bisa temukan wisata favoritmu dn kategori wisata yang kamu inginkan, and get your 
                             place now.
                         </p>
-                        <a href="deskirpsi.html" class="button">Informasi Wisata</a>
+                        <a href="{% url 'tictrav:deskripsi' %}" class="button">Informasi Wisata</a>
                     </div>
 
                     <div class="about__img">
@@ -187,41 +189,17 @@
                 
                 <div class="discover__container container swiper-container">
                     <div class="swiper-wrapper">
-                        <!--==================== DISCOVER 1 ====================-->
-                        <div class="discover__card swiper-slide">
-                            <img src="{% static 'img/discover1.jpg' %}" alt="" class="discover__img">
-                            <div class="discover__data">
-                                <h2 class="discover__title">Bali</h2>
-                                <span class="discover__description">24 tours available</span>
+                        {% for tourism in tourism %}
+                            <!--==================== DISCOVER 1 ====================-->
+                            <div id="{{ forloop.counter }}" class="discover__card swiper-slide">
+                                <img src="/static/img/discover{{forloop.counter}}.jpg" alt="" class="discover__img">
+                                <div class="discover__data">
+                                    <h2 class="discover__title">{{tourism.city}}</h2>
+                                    <span class="discover__description">{{tourism.jum_city}} tours available</span>
+                                </div>
                             </div>
-                        </div>
 
-                        <!--==================== DISCOVER 2 ====================-->
-                        <div class="discover__card swiper-slide">
-                            <img src="{% static 'img/Bandung.jpg' %}" alt="" class="discover__img">
-                            <div class="discover__data">
-                                <h2 class="discover__title">Bandung</h2>
-                                <span class="discover__description">32 tours available</span>
-                            </div>
-                        </div>
-
-                        <!--==================== DISCOVER 3 ====================-->
-                        <div class="discover__card swiper-slide">
-                            <img src="{% static 'img/Surabaya.jpg' %}" alt="" class="discover__img">
-                            <div class="discover__data">
-                                <h2 class="discover__title">Surabaya</h2>
-                                <span class="discover__description">30 tours available</span>
-                            </div>
-                        </div>
-
-                        <!--==================== DISCOVER 4 ====================-->
-                        <div class="discover__card swiper-slide">
-                            <img src="{% static 'img/Yogyakarta2.jpg' %}" alt="" class="discover__img">
-                            <div class="discover__data">
-                                <h2 class="discover__title">Yogyakarta</h2>
-                                <span class="discover__description">14 tours available</span>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </section>

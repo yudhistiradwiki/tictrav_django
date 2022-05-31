@@ -38,16 +38,16 @@
         <div class="form-content">
           <div class="login-form">
             <div class="title">Login</div>
-          <form method="post">
+          <form id="login" method="POST" action="{% url 'tictrav:masuk' %}">
             {% csrf_token %}
             <div class="input-boxes">
               <div class="input-box">
                 <i class="fas fa-user"></i>
-                <input type="text" placeholder="Nama Pengguna" name="username" required id="id_username">
+                <input type="text" placeholder="Nama Pengguna" name="username" required id="id_username" required>
               </div>
               <div class="input-box">
                 <i class="fas fa-lock"></i>
-                <input type="password" placeholder="Kata Sandi" name="password" required id="id_password">
+                <input type="password" placeholder="Kata Sandi" name="password" required id="id_password" required>
               </div>
               <div class="text"><a href="#">Forgot password?</a></div>
               <div class="button input-box">
@@ -59,19 +59,20 @@
       </div>
         <div class="signup-form">
           <div class="title">Signup</div>
-        <form action="#">
+        <form id="signup" method="POST" action="{% url 'tictrav:register' %}">
+            {% csrf_token %}
             <div class="input-boxes">
               <div class="input-box">
                 <i class="fas fa-user"></i>
-                <input type="text" placeholder="Enter your name" required>
+                <input type="text" name="fullname" placeholder="Enter your name" required>
               </div>
               <div class="input-box">
                 <i class="fas fa-envelope"></i>
-                <input type="text" placeholder="Enter your email" required>
+                <input type="text" name="email" placeholder="Enter your email" required>
               </div>
               <div class="input-box">
                 <i class="fas fa-lock"></i>
-                <input type="password" placeholder="Enter your password" required>
+                <input type="password" name="password" placeholder="Enter your password" requireds>
               </div>
               <div class="button input-box">
                 <input type="submit" value="Sumbit">
