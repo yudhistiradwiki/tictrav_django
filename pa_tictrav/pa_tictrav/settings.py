@@ -78,10 +78,10 @@ WSGI_APPLICATION = 'pa_tictrav.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd79vbngapale31',
-        'USER': "tabsteplxjxoqt",
-        'PASSWORD': "bc566a9e9e9f1e90660f617a990001cf702ff5ee8959532d5f643118a98a7470",
-        'HOST': "ec2-34-231-221-151.compute-1.amazonaws.com",
+        'NAME': 'tictrav',
+        'USER': "postgres",
+        'PASSWORD': "12345",
+        'HOST': "",
         'PORT': 5432,
     }
 }
