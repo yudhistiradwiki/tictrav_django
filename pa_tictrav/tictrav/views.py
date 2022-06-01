@@ -101,7 +101,12 @@ def ticket(request):
      return render(request, 'ticket.html')
 
 def desc(request):
-     return render(request, 'desc.html')
+     data = models.TourismPlace.objects.all()
+     return render(request, "desc.html", {'data':data})
 
 def coba(request):
      return render(request, 'coba.html')
+
+def rekomendasi(request):
+    data = models.TourismPlace.objects.all()
+    return render(request, "desc.html", {'data':data})

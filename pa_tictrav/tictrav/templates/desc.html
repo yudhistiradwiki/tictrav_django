@@ -174,17 +174,19 @@
     
                 <div class="place__container container grid">
                     <!--==================== PLACES CARD 1 ====================-->
+                    {% for data in data %}
                     <div class="place__card">
                         <img src="{% static 'img/place1.jpg' %}" alt="" class="place__img">
                         
                         <div class="place__content">
                             <span class="place__rating">
                                 <i class="ri-star-line place__rating-icon"></i>
-                                <span class="place__rating-number">4,8</span>
+                                <span class="place__rating-number">{{data.Rating}}</span>
                             </span>
     
                             <div class="place__data">
-                                <h3 class="place__title">Pantai Kuta, Bali</h3>
+                                <h3 class="place__title">
+                                    {{data.place_name}}, {{data.city}} </h3>
                                 <span class="place__subtitle">Indonesia</span>
                             </div>
                         </div>
@@ -193,93 +195,10 @@
                             <i class="ri-arrow-right-line"></i>
                         </button>
                     </div>
-    
-                    <!--==================== PLACES CARD 2 ====================-->
-                    <div class="place__card">
-                        <img src="{% static 'img/zoo.jpg' %}" alt="" class="place__img">
-                        
-                        <div class="place__content">
-                            <span class="place__rating">
-                                <i class="ri-star-line place__rating-icon"></i>
-                                <span class="place__rating-number">5,0</span>
-                            </span>
-    
-                            <div class="place__data">
-                                <h3 class="place__title">Zoo Logical Garden, Bandung</h3>
-                                <span class="place__subtitle">Indonesia</span>
-                            </div>
-                        </div>
-    
-                        <button class="button button--flex place__button">
-                            <i class="ri-arrow-right-line"></i>
-                        </button>
-                    </div>
-    
-                    <!--==================== PLACES CARD 3 ====================-->
-                    <div class="place__card">
-                        <img src="{% static 'img/Bukit.jpg' %}" alt="" class="place__img">
-                        
-                        <div class="place__content">
-                            <span class="place__rating">
-                                <i class="ri-star-line place__rating-icon"></i>
-                                <span class="place__rating-number">4,9</span>
-                            </span>
-    
-                            <div class="place__data">
-                                <h3 class="place__title">Bukit Mojo, Yogyakart</h3>
-                                <span class="place__subtitle">Indonesia</span>
-                            </div>
-                        </div>
-    
-                        <button class="button button--flex place__button">
-                            <i class="ri-arrow-right-line"></i>
-                        </button>
-                    </div>
-    
-                    <!--==================== PLACES CARD 4 ====================-->
-                    <div class="place__card">
-                        <img src="{% static 'img/dufan.jpg' %}" alt="" class="place__img">
-                        
-                        <div class="place__content">
-                            <span class="place__rating">
-                                <i class="ri-star-line place__rating-icon"></i>
-                                <span class="place__rating-number">5,0</span>
-                            </span>
-    
-                            <div class="place__data">
-                                <h3 class="place__title">Dunia Fantasy, Jakarta</h3>
-                                <span class="place__subtitle">Indonesia</span>
-                            </div>
-                        </div>
-    
-                        <button class="button button--flex place__button">
-                            <i class="ri-arrow-right-line"></i>
-                        </button>
-                    </div>
-    
-                    <!--==================== PLACES CARD 5 ====================-->
-                    <div class="place__card">
-                        <img src="{% static 'img/tamansafarri2.jpg' %}" alt="" class="place__img">
-                        
-                        <div class="place__content">
-                            <span class="place__rating">
-                                <i class="ri-star-line place__rating-icon"></i>
-                                <span class="place__rating-number">4,8</span>
-                            </span>
-    
-                            <div class="place__data">
-                                <h3 class="place__title">Taman Safari, Bogor</h3>
-                                <span class="place__subtitle">Indonesia</span>
-                            </div>
-                        </div>
-    
-                        <button class="button button--flex place__button">
-                            <i class="ri-arrow-right-line"></i>
-                        </button>
-                    </div>
+                    {% endfor %}
                 </div>
+
             </section>
-    
             <!--==================== SUBSCRIBE ====================-->
             <section class="subscribe section">
                 <div class="subscribe__bg">
