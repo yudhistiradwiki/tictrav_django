@@ -69,6 +69,10 @@ def logout(request):
 # def home(request):
 #      return render(request, 'home.html')
 def index(request):
+    tourism = None
+    # if request.user.is_authenticated:
+    #     # Jalankan rekomendasi dari model-development
+    # else:
     tourism = models.TourismPlace.objects.values('city').annotate(jum_city=Count('city')).order_by()
     return render(request, 'home.html',{'tourism': tourism})
 
@@ -101,8 +105,13 @@ def ticket(request):
      return render(request, 'ticket.html')
 
 def desc(request):
+<<<<<<< HEAD
      data = models.TourismPlace.objects.all()
      return render(request, "desc.html", {'data':data})
+=======
+    data = models.TourismPlace.objects.all()
+    return render(request, 'desc.html',{'data':data})
+>>>>>>> 7c30f9f65313d318012d80f9ae4e0b265ee07026
 
 def coba(request):
      return render(request, 'coba.html')
