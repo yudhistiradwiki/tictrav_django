@@ -173,11 +173,10 @@
                 <h2 class="section__title">Deskripsi tempat Wisata Lainnya</h2>
     
                 <div class="place__container container grid">
-<<<<<<< HEAD
                     <!--==================== PLACES CARD 1 ====================-->
                     {% for data in data %}
                     <div class="place__card">  
-                        <img style= "width : 166px" src="{{data.img.url}}" alt="" class="place__img">
+                        <img style= "width : 166px"src="{{data.img.url}}" alt="" class="place__img">
                         
                         <div class="place__content">
                             <span class="place__rating">
@@ -197,31 +196,6 @@
                         </button>
                     </div>
                     {% endfor %}
-=======
-                    {% for data in data %}
-                        <!--==================== PLACES CARD 1 ====================-->
-                        <div class="place__card">
-                            <img src="{{data.img.url}}" alt="" class="place__img" style="height: 263px;width: 163.88px;">
-                            
-                            <div class="place__content">
-                                <span class="place__rating">
-                                    <i class="ri-star-line place__rating-icon"></i>
-                                    <span class="place__rating-number">{{data.rating}}</span>
-                                </span>
-        
-                                <div class="place__data">
-                                    <h3 class="place__title">{{data.place_name}}, {{data.city}}</h3>
-                                    <span class="place__subtitle">Indonesia</span>
-                                </div>
-                            </div>
-        
-                            <button class="button button--flex place__button">
-                                <i class="ri-arrow-right-line"></i>
-                            </button>
-                        </div>
-                    {% endfor %}
-    
->>>>>>> 7c30f9f65313d318012d80f9ae4e0b265ee07026
                 </div>
 
             </section>
