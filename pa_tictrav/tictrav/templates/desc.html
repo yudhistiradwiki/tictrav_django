@@ -175,8 +175,8 @@
                 <div class="place__container container grid">
                     <!--==================== PLACES CARD 1 ====================-->
                     {% for data in data %}
-                    <div class="place__card">
-                        <img src="{% static 'img/place1.jpg' %}" alt="" class="place__img">
+                    <div class="place__card">  
+                        <img style= "width : 166px" src="{{data.img.url}}" alt="" class="place__img">
                         
                         <div class="place__content">
                             <span class="place__rating">
