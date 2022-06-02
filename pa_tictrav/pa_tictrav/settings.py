@@ -80,11 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'tictrav',
         'USER': "postgres",
-<<<<<<< HEAD
-        'PASSWORD': "180800",
-=======
         'PASSWORD': "12345",
->>>>>>> 7c30f9f65313d318012d80f9ae4e0b265ee07026
         'HOST': "",
         'PORT': 5432,
     }
