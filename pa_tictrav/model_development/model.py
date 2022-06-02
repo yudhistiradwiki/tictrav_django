@@ -55,7 +55,7 @@ def quicksort(numpyArray, minIndex, maxIndex, sort='asc',targetIndex=0):
 # Model (Nanti dipindah di dalam folder baru)
 class Model:
 	def __init__(self, modelName):
-		self.__model = tf.keras.models.load_model(os.getcwd()+f"//app//model_modules//saved_model//{modelName}.h5")
+		self.__model = tf.keras.models.load_model(f'./model-development/Multiclass/{modelName}.h5')
 
 	def predict(self,N,data,features=None,target=None):
 

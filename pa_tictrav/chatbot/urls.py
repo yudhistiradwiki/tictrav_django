@@ -7,6 +7,6 @@ app_name = 'chatbot'
 
 urlpatterns=[
 	# Pass
-	path('answer', views.getChatbotResponse, name='getAnswerChatbot')
+	path('ask-question/', views.getChatbotResponse, name='getAnswerChatbot')
 
 ]
