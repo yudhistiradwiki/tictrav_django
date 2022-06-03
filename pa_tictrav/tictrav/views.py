@@ -17,7 +17,7 @@ from model_development import model as md
 
 
 # Create your views here.
-
+model_statictis = None
 # Login
 # def login(request):
 #     if(request.method == 'POST'):
@@ -114,18 +114,23 @@ def ticket(request):
      return render(request, 'ticket.html')
 
 def desc(request, placeid):
+    global model_statictis
     tourism = models.TourismPlace.objects.get(place_id=placeid)
 
-    data = models.Reservation.objects.all()
-
+    reservation = models.Reservation.objects.all()
     data = {
-        'user':[i.user for i in data],
-        'place':[i.place for i in data],
-        'place_ratings':[i.place_ratings for i in data]
+        'user':[i.user for i in reservation],
+        'place':[i.place for i in reservation],
+        'place_ratings':[i.place_ratings for i in reservation]
     }
 
-    recommendation_ByPlace = colaborative_calculation_statistik(data).itemSimilarByItem(tourism.place_name, 5)
-    return render(request, "desc.html", {'data':tourism, 'recommend':recommendation_ByPlace})
+    # Inisialisasi model hanya sekali
+    if not model_statictis:
+        model_statictis = md.colaborative_calculation_statistik(data,"place")
+    
+    recommend = model_statictis.itemRecommendedByItem(tourism.place_name, 5)
+
+    return render(request, "desc.html", {'data':tourism, 'recommend':recommend})
 
 def coba(request):
      return render(request, 'coba.html')

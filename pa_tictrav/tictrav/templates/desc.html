@@ -4,7 +4,7 @@
         <main class="main">
             <!--==================== HOME ====================-->
             <section class="home" id="home">
-                <img src="{% static 'img/homebali.jpg' %}" alt="" class="home__img">
+                <img src="{{data.img.url}}" alt="" class="home__img">
     
                 <div class="home__container container grid">
                     <div class="home__data">
@@ -166,18 +166,18 @@
     
             <!-==================== PLACES ====================-->
             <section class="place section" id="place">
-                <h2 class="section__title">Tempat Wisata Lainnya</h2>
+                <h2 class="section__title">Tempat Wisata Yang Mungkin Kamu Sukai</h2>
     
                 <div class="place__container container grid">
                     <!--==================== PLACES CARD 1 ====================-->
-                    {% for recommend in recommend %}
+                    {% for recommend in recommend|dictsortreversed:'rating' %}
                     <div class="place__card">  
                         <img style= "width : 166px"src="{{recommend.img.url}}" alt="" class="place__img">
                         
                         <div class="place__content">
                             <span class="place__rating">
                                 <i class="ri-star-line place__rating-icon"></i>
-                                <span class="place__rating-number">{{recommend.Rating}}</span>
+                                <span class="place__rating-number">{{recommend.rating}}</span>
                             </span>
     
                             <div class="place__data">
@@ -186,10 +186,10 @@
                                 <span class="place__subtitle">Indonesia</span>
                             </div>
                         </div>
-    
-                        <button class="button button--flex place__button">
+                        
+                        <a href="{% url 'tictrav:deskripsi' recommend.place_id %}" class="button button--flex place__button">
                             <i class="ri-arrow-right-line"></i>
-                        </button>
+                        </a>
                     </div>
                     {% endfor %}
                 </div>

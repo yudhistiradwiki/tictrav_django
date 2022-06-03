@@ -29,7 +29,7 @@
                     <div class="home__info">
                         <div>
                             <span class="home__info-title">5 best places to visit in Indonesia</span>
-                            {% with tourism|first as tourism %}
+                            {% with tourism|dictsortreversed:'rating'|first as tourism %}
                                 <a href="/desc/{{ tourism.place_id }}" class="button button--flex button--link home__info-button">
                                     More <i class="ri-arrow-right-line"></i>
                                 </a>
@@ -66,9 +66,9 @@
                                     </div>
                                 </div>
 
-                                <button class="button button--flex place__button">
+                                <a href="{% url 'tictrav:deskripsi' recommend.place_id %}" class="button button--flex place__button">
                                     <i class="ri-arrow-right-line"></i>
-                                </button>
+                                </a>
                             </div>
                         {% endfor %}
                     </div>
