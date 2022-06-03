@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 
 class DataPreprocessing:
 	def __init__(self,data):
-		self.__data = data
+		self.__data = pd.DataFrame(data)
 
 		"""
 			Terdapat dua opsi, yaitu ekstraksi fitur berdasarkan Category, atau Place_Name

@@ -9,7 +9,7 @@
                 <div class="home__container container grid">
                     <div class="home__data">
                         <span class="home__data-subtitle">Deskripsi Wisata</span>
-                        <h1 class="home__data-title">Jelajahi<br> Pantai Kuta <br><b> Bali Indonesia</b></h1>
+                        <h1 class="home__data-title">Jelajahi<br> {{data.place_name}} <br><b> {{data.city}} Indonesia</b></h1>
                         <a href="#about" class="button">Explore</a>
     
                     </div>
@@ -45,23 +45,19 @@
             <section class="about section" id="about">
                 <div class="about__container container grid">
                     <div class="about__data">
-                        <h2 class="section__title about__title">Informasi <br> Pantai Kuta Bali </h2>
-                        <p class="about__description">Pantai Kuta terletak di bagian barat Pulau Bali, tepatnya di Kecamatan Kuta, Kabupaten Badung. Salah satu hal yang membuat pantai ini selalu ramai, selain karena keindahan yang dimiliki, adalah karena letaknya yang strategis. Pantai Kuta terletak tidak jauh dari Bandara Internasional Ngurah Rai. Dari bandara menuju pantai, perjalanan hanya membutuhkan waktu sekitar 15 menit.
-    
-                            Waktu tempuh tersebut akan bertambah sangat panjang pada saat-saat tertentu, seperti di musim liburan antara Bulan Juli-September. Pada periode tersebut, jalan menuju Pantai Kuta akan dipenuhi antrian mobil.
-                            
-                            Menghadapi hal tersebut, pihak pengelola melakukan berbagai upaya agar kendaraan tidak terlalu menumpuk di jalan menuju pantai. Salah satunya adalah dengan diberlakukannya parkir transit yang dipusatkan di Central Parking Kuta. Bus-bus besar yang membawa rombongan wisatawan diharuskan memarkir kendaraannya di sana. Perjalanan menuju pantai dilanjutkan menggunakan transportasi khusus dengan tarif Rp10.000/orang.
+                        <h2 class="section__title about__title">Informasi <br> {{data.place_name}} {{data.city}} </h2>
+                        <p class="about__description">{{data.description|truncatechars:1090}}
                         </p>
                         <a href="#" class="button">Pesan Tiket</a>
                     </div>
     
                     <div class="about__img">
                         <div class="about__img-overlay">
-                            <img src="{% static 'img/bali1.jpg' %}" alt="" class="about__img-one">
+                            <img src="{{data.img.url}}" alt="" class="about__img-one">
                         </div>
     
                         <div class="about__img-overlay">
-                            <img src="{% static 'img/bali2.jpg' %}" alt="" class="about__img-two">
+                            <img src="{{data.img.url}}" alt="" class="about__img-two">
                         </div>
                     </div>
                 </div>
@@ -170,23 +166,23 @@
     
             <!-==================== PLACES ====================-->
             <section class="place section" id="place">
-                <h2 class="section__title">Deskripsi tempat Wisata Lainnya</h2>
+                <h2 class="section__title">Tempat Wisata Lainnya</h2>
     
                 <div class="place__container container grid">
                     <!--==================== PLACES CARD 1 ====================-->
-                    {% for data in data %}
+                    {% for recommend in recommend %}
                     <div class="place__card">  
-                        <img style= "width : 166px"src="{{data.img.url}}" alt="" class="place__img">
+                        <img style= "width : 166px"src="{{recommend.img.url}}" alt="" class="place__img">
                         
                         <div class="place__content">
                             <span class="place__rating">
                                 <i class="ri-star-line place__rating-icon"></i>
-                                <span class="place__rating-number">{{data.Rating}}</span>
+                                <span class="place__rating-number">{{recommend.Rating}}</span>
                             </span>
     
                             <div class="place__data">
                                 <h3 class="place__title">
-                                    {{data.place_name}}, {{data.city}} </h3>
+                                    {{recommend.place_name}}, {{recommend.city}} </h3>
                                 <span class="place__subtitle">Indonesia</span>
                             </div>
                         </div>

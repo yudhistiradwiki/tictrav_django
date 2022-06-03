@@ -82,7 +82,7 @@ def index(request):
         recommend = md.Model('ModelUserAgeTourismConcate(Dipake)',data).predict(request.user.id,request.user.age)
         recommend = models.TourismPlace.objects.filter(pk__in=recommend)
 
-    tourism = models.TourismPlace.objects.values('city').annotate(jum_city=Count('city')).order_by()
+    # tourism = models.TourismPlace.objects.values('city').annotate(jum_city=Count('city')).order_by()
     return render(request, 'home.html',{'tourism': tourism,'recommend':recommend})
 
 
@@ -113,9 +113,19 @@ class ViewPDF(View):
 def ticket(request):
      return render(request, 'ticket.html')
 
-def desc(request):
-     data = models.TourismPlace.objects.all()
-     return render(request, "desc.html", {'data':data})
+def desc(request, placeid):
+    tourism = models.TourismPlace.objects.get(place_id=placeid)
+
+    data = models.Reservation.objects.all()
+
+    data = {
+        'user':[i.user for i in data],
+        'place':[i.place for i in data],
+        'place_ratings':[i.place_ratings for i in data]
+    }
+
+    recommendation_ByPlace = colaborative_calculation_statistik(data).itemSimilarByItem(tourism.place_name, 5)
+    return render(request, "desc.html", {'data':tourism, 'recommend':recommendation_ByPlace})
 
 def coba(request):
      return render(request, 'coba.html')

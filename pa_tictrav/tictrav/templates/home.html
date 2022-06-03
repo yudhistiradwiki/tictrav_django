@@ -29,9 +29,11 @@
                     <div class="home__info">
                         <div>
                             <span class="home__info-title">5 best places to visit in Indonesia</span>
-                            <a href="{% url 'tictrav:deskripsi' %}" class="button button--flex button--link home__info-button">
-                                More <i class="ri-arrow-right-line"></i>
-                            </a>
+                            {% with tourism|first as tourism %}
+                                <a href="/desc/{{ tourism.place_id }}" class="button button--flex button--link home__info-button">
+                                    More <i class="ri-arrow-right-line"></i>
+                                </a>
+                            {% endwith %}
                         </div>
 
                         <div class="home__info-overlay">
@@ -46,7 +48,7 @@
                 <section class="place section" id="place">
                     <h2 class="section__title">Rekomendasi untuk anda</h2>
                     <div class="place__container container grid">
-                        {% for recommend in recommend %}
+                        {% for recommend in recommend|dictsortreversed:'rating' %}
                             <!--==================== PLACES CARD 1 ====================-->
                             <div class="place__card">
                                 <img src="{{recommend.img.url}}" alt="" class="place__img">
@@ -54,7 +56,7 @@
                                 <div class="place__content">
                                     <span class="place__rating">
                                         <i class="ri-star-line place__rating-icon"></i>
-                                        <span class="place__rating-number">4,8</span>
+                                        <span class="place__rating-number">{{recommend.rating}}</span>
                                     </span>
 
                                     <div class="place__data">
@@ -81,7 +83,7 @@
                         <p class="about__description">Kamu bisa temukan wisata favoritmu dn kategori wisata yang kamu inginkan, and get your 
                             place now.
                         </p>
-                        <a href="{% url 'tictrav:deskripsi' %}" class="button">Informasi Wisata</a>
+                        <a href="" class="button">Informasi Wisata</a>
                     </div>
 
                     <div class="about__img">
@@ -102,13 +104,16 @@
                 
                 <div class="discover__container container swiper-container">
                     <div class="swiper-wrapper">
-                        {% for tourism in tourism %}
+                        {% regroup tourism|dictsort:'city' by city as tourisms %}
+                        {% for cities, tourism in tourisms %}
                             <!--==================== DISCOVER 1 ====================-->
                             <div id="{{ forloop.counter }}" class="discover__card swiper-slide">
                                 <img src="/static/img/discover{{forloop.counter}}.jpg" alt="" class="discover__img">
                                 <div class="discover__data">
-                                    <h2 class="discover__title">{{tourism.city}}</h2>
-                                    <span class="discover__description">{{tourism.jum_city}} tours available</span>
+                                    <h2 class="discover__title">{{cities}}</h2>
+                                    <span class="discover__description">
+                                            {{ tourism|length }} tours available
+                                    </span>
                                 </div>
                             </div>
 

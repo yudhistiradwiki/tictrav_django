@@ -8,7 +8,7 @@ app_name = 'tictrav'
 
 urlpatterns = [
     path('', views.index, name='home'),
-    path('desc/', views.desc, name='deskripsi'),
+    path('desc/<int:placeid>/', views.desc, name='deskripsi'),
     path('ticket/', views.ticket, name='ticket'),
     path('ticketpdf/', views.ViewPDF.as_view(), name="pdf_view"),
     path('login/', LoginView.as_view(), name='masuk'),

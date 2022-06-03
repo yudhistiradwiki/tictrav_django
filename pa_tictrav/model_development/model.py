@@ -141,7 +141,7 @@ recommended_data = colaborative_calculation(data_item).itemRecommendedByItem(pla
 class colaborative_calculation_statistik:
     def __init__(self, data):
         self.__listUser = np.array(data)
-        self.__df_data  = data
+        self.__df_data  = dp.DataPreprocessing(data).transformDataByTarget(self,target=None,value=None,dropby=[])
     """
         Kumpulan fungsi untuk melakukan perhitungan aritmatika menggunakan cosine similarity, 
         dan pearson corr
