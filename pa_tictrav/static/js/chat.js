@@ -49,13 +49,14 @@ firstBotMessage();
 // Retrieves the response
 function getHardResponse(userText) {
 
-    // Get jawaban dari QAS URL
+    // Get jawaban dari QAS URL dengan metode POST
     $.ajax({
         url:"http://127.0.0.1:8000/chatbot/ask-question/",
         type:'POST',
         data: {
             'pertanyaan':userText
         },
+        // Bila post request berhasil maka akan ditambahkan hasil response ke dalam chat htmlnya.
         success:function(response){
             console.log(response);
             if(response){

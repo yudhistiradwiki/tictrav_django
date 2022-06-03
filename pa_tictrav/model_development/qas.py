@@ -106,6 +106,7 @@ class chatbot:
 		# Klasifikasi unutk mendapatkan konteks label pertanyaan
 		label = self.klasifikasiKonteks(pertanyaan)
 
+		print([label[0]])
 		# Pengambilan konteks
 		konteks = self.__data[self.__data.place_id == label[0]]['description'].values[0]
 

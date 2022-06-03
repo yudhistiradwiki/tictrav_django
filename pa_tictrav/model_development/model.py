@@ -11,6 +11,8 @@ import tensorflow as tf
 # Model Path
 import os
 
+from django.http import Http404
+
 
 
 from . import dataPreprocessing as dp
@@ -40,8 +42,7 @@ def parti(numpyArray, minIndex, maxIndex,sort,targetIndex):
         numpyArray[i+1],numpyArray[maxIndex] = numpyArray[maxIndex],numpyArray[i+1]
     
     return i+1
-        
-            
+
 def quicksort(numpyArray, minIndex, maxIndex, sort='asc',targetIndex=0):
     # Pengecekan apakah nilai index lebih kecil dibandingkan panjang array
     if(minIndex<maxIndex):
@@ -51,90 +52,77 @@ def quicksort(numpyArray, minIndex, maxIndex, sort='asc',targetIndex=0):
         # Kanan
         quicksort(numpyArray,partition+1,maxIndex,sort,targetIndex)
 
-
 # Model (Nanti dipindah di dalam folder baru)
 class Model:
-	def __init__(self, modelName):
-		self.__model = tf.keras.models.load_model(f'./model-development/Multiclass/{modelName}.h5')
+    def __init__(self, modelName, data):
+        self.__model = tf.keras.models.load_model(os.getcwd()+f'//model_development//model//Multiclass//{modelName}.h5')
+        self.__data = pd.DataFrame(data)
 
-	def predict(self,N,data,features=None,target=None):
+    def predict(self,userId,age,target=None):
+        features = ['user_id','place_id','age']
+        if(not features):
+            return None
 
-		print(data.info())
-		if(not features):
-			return None
-
-		recommend = None
-
-		print(N)
-		"""
-		Untuk keperluan pengujian performa model 
-
-		if(target):
-		y = [data[i] for i in target]
-		result = self.__modelName.predict(x=x,y=y)
-		else:
-		"""
+        recommend = None
+        """
+            Untuk keperluan pengujian performa model 
+            if(target):
+            y = [data[i] for i in target]
+            result = self.__modelName.predict(x=x,y=y)
+            else:
+        """
 
 		# self.__model.predict(x=x)
 
 		# Penyeleksian fitur data yang akan digunakan untuk prediksi hasil model.
-		try:
-			recommend = getRecommendation(N,self.__model,features,data)
+        data = self.generateUserData(userId, age)        
+        try:
+            recommend = self.getRecommendation(userId,features,data)
 
 			# print(f'Recommended sebelum sort: {recommend}')
-			# Rekomendasi tempat wisata 10 teratas
+            # print(recommend)
+        except:
+            print("error 500")
+            # raise Http404()
+        else:
+            recommend = [i for i in recommend[:5]]
+            """
+			     Diisi dengan rekomendasi berdasarkan trending sekarang
+            """
+            print(recommend)
+        return recommend
 
-			quicksort(recommend,0,len(recommend)-1,'desc')
+    """
+        pembuatan data prediksi dan mendapatkan rekomendasi tempat
+    """
+    def generateUserData(self, userId, age):
+        length = self.__data.shape[0]
+        newDf = pd.DataFrame({
+	        'user_id':[userId for i in range(length)],
+	        'place_id':[i for i in self.__data.place_id],
+	        'age':[age for i in range(length)],
+	        'category':[i for i in self.__data.category]
+        })
+        newDf['category'] = newDf['category'].replace([3, 2, 5, 4, 1],[2, 1, 4, 3, 0])
+        return newDf
 
-			# print(recommend)
+    """
+        Kumpulan fungsi modul yang digunakan di backend nantinya untuk melakukan pengolahan data
+    """
+    def getRecommendation(self, userId, fitur, data):
+        targetUser = data[data['user_id']==userId]
+        placeId = np.array(targetUser['place_id'])
+        x = [targetUser[i] for i in fitur]
+        recommendation = self.__model.predict(x=x)
+        placeRecommendation = [[placeId[i],np.argmax(recommendation[i]),max(recommendation[i])] for i in range(len(recommendation))]
 
+        # Penyortiran rekomendasi tempat
+        quicksort(placeRecommendation,0,len(placeRecommendation)-1,'desc',2)
+        quicksort(placeRecommendation,0,len(placeRecommendation)-1,'desc',1)
 
-			recommend = [i[0] for i in recommend[:10]]
-
-			print(recommend)
-		except:
-			print("500 Internal Server Error Features")
-		else:
-			"""
-			Diisi dengan rekomendasi berdasarkan trending sekarang
-			"""
-		return recommend
-
-
-	"""
-		pembuatan data prediksi dan mendapatkan rekomendasi tempat
-	"""
-	def generateUserData(userId,age,data):
-	    length = data.shape[0]+1
-	    newDf = pd.DataFrame({
-	        'User_Id':[userId for i in range(1,length)],
-	        'Place_Id':[i for i in data.Place_Id],
-	        'Age':[age for i in range(1,length)],
-	        'Category':[i for i in data.Category]
-	    })
-	    
-	    newDf['Category'] = le.fit_transform(newDf['Category'])
-	    return newDf
-
-
-	"""
-		Kumpulan fungsi modul yang digunakan di backend nantinya untuk melakukan pengolahan data
-	"""
-	def getRecommendation(userId=1, model=False, fitur=[], data=None):
-	    targetUser = data[data['user_id']==userId]
-	    placeId = np.array(targetUser['place_id'])
-	    x= [targetUser[i] for i in fitur]
-	    recommendation = model.predict(x=x)
-	    placeRecommendation = [[placeId[i],np.argmax(recommendation[i]),max(recommendation[i])] for i in range(len(recommendation))]
-	    
-	    # Penyortiran rekomendasi tempat
-	    quicksort(placeRecommendation,0,len(placeRecommendation)-1,'desc',2)
-		quicksort(placeRecommendation,0,len(placeRecommendation)-1,'desc',1)
-
-		# Pengambilan tempat wisata yang telah disortir
-		placeRecommendation = [i[0] for i in placeRecommendation]
-	    
-	    return placeRecommendation
+        # Pengambilan tempat wisata yang telah disortir
+        placeRecommendation = [i[0] for i in placeRecommendation]
+        return placeRecommendation
 
 
 """
@@ -151,7 +139,6 @@ recommended_data = colaborative_calculation(data_item).itemRecommendedByItem(pla
 
 """
 class colaborative_calculation_statistik:
-	class colaborative_calculation:
     def __init__(self, data):
         self.__listUser = np.array(data)
         self.__df_data  = data

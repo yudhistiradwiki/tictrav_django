@@ -13,6 +13,7 @@ from django.conf import settings
 from tictrav import models
 from django.db.models import Count
 
+from model_development import model as md
 
 
 # Create your views here.
@@ -32,23 +33,23 @@ from django.db.models import Count
     
 #     return redirect("/")
         
-def login(request):
-    username = ["yudhistiradwiki", "steven", "rijal", "nicky", "diky"]
-    password = "pass"
+# def login(request):
+#     username = ["yudhistiradwiki", "steven", "rijal", "nicky", "diky"]
+#     password = "pass"
 
-    konteks = {
-        'user': username,
-        'pass': password,
-    }
-    return render(request, 'login.html', konteks)
+#     konteks = {
+#         'user': username,
+#         'pass': password,
+#     }
+#     return render(request, 'login.html', konteks)
 
 # Register
 def register(request):
      if request.method=='POST':
-        _, fullname, email, password = request.POST.values()
+        _, fullname, age, email, password = request.POST.values()
 
         try:
-            user = models.AccountCustom.objects.create_user(email,password,fullname)
+            user = models.AccountCustom.objects.create_user(email,password,fullname,age)
         except:
             return redirect("/login",{'message':'User telah terdaftar'})
         else:
@@ -69,12 +70,20 @@ def logout(request):
 # def home(request):
 #      return render(request, 'home.html')
 def index(request):
-    tourism = None
-    # if request.user.is_authenticated:
-    #     # Jalankan rekomendasi dari model-development
-    # else:
+    recommend = None
+    tourism = models.TourismPlace.objects.all()
+    data = {
+        'place_id':[i.place_id for i in tourism],
+        'place_name':[i.place_name for i in tourism],
+        'category':[i.category for i in tourism],
+    }
+    if request.user.is_authenticated:
+        print(request.user.id," ",request.user.age)
+        recommend = md.Model('ModelUserAgeTourismConcate(Dipake)',data).predict(request.user.id,request.user.age)
+        recommend = models.TourismPlace.objects.filter(pk__in=recommend)
+
     tourism = models.TourismPlace.objects.values('city').annotate(jum_city=Count('city')).order_by()
-    return render(request, 'home.html',{'tourism': tourism})
+    return render(request, 'home.html',{'tourism': tourism,'recommend':recommend})
 
 
 
