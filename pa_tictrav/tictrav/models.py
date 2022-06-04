@@ -88,7 +88,7 @@ class TourismPlace(models.Model):
     img = models.ImageField(upload_to='images/',default="images/no_img.jpg")
     
     def __str__(self):
-        return "{} {}".format(self.place_id,self.place_name)
+        return "{}".format(self.place_id)
 
 
 """

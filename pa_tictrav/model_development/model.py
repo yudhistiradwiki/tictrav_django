@@ -88,7 +88,6 @@ class Model:
             """
 			     Diisi dengan rekomendasi berdasarkan trending sekarang
             """
-            print(recommend)
         return recommend
 
     """
@@ -138,10 +137,12 @@ recommended_data = colaborative_calculation(data_item).itemRecommendedByItem(pla
 
 """
 class colaborative_calculation_statistik:
-    def __init__(self, data, target):
-        self.__listUser = np.array(data)
-        self.__target = target
-        self.__df_data  = dp.DataPreprocessing(data).transformDataByTarget(target=self.__target,value="place_ratings",dropby=["user"])
+    def __init__(self, data, target, status):
+        if status==0:
+            self.__listUser = np.array(data)
+        else:
+            self.__target = target
+            self.__df_data  = dp.DataPreprocessing(data).transformDataByTarget(target=self.__target,value="place_ratings",dropby=["user"])
     """
         Kumpulan fungsi untuk melakukan perhitungan aritmatika menggunakan cosine similarity, 
         dan pearson corr
@@ -185,8 +186,8 @@ class colaborative_calculation_statistik:
         if(not (placeName or k)):
             return None
         __data = self.__df_data.corr()
-        recommend = pd.DataFrame(__data.iloc[__data.columns.get_loc(f'{self.__target}__{placeName}'),
-                                           :]).sort_values(by=__data.iloc[__data.columns.get_loc(f'{self.__target}__{placeName}'),:].name,
+        recommend = pd.DataFrame(__data.iloc[__data.columns.get_loc(f'{self.__target}_{placeName}'),
+                                           :]).sort_values(by=__data.iloc[__data.columns.get_loc(f'{self.__target}_{placeName}'),:].name,
                                                            ascending=False)[1:k+1]
         return recommend.index
     
@@ -202,7 +203,7 @@ class colaborative_calculation_statistik:
         __data = self.__df_data.T
         placeWisat = list(__data.index)
 
-        item1 = np.array(__data)[list(__data.index).index(f"{target}__{placeName}"),:]
+        item1 = np.array(__data)[list(__data.index).index(f"{target}_{placeName}"),:]
         for i in placeWisat:
             item2 = np.array(__data)[list(__data.index).index(i),:]
             listSimItem.append((i,

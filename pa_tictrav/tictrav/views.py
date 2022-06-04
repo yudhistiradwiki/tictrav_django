@@ -15,9 +15,12 @@ from django.db.models import Count
 
 from model_development import model as md
 
+import re
+
 
 # Create your views here.
-model_statictis = None
+model_statictis_item = None
+model_predict = None
 # Login
 # def login(request):
 #     if(request.method == 'POST'):
@@ -70,6 +73,7 @@ def logout(request):
 # def home(request):
 #      return render(request, 'home.html')
 def index(request):
+    global model_predict
     recommend = None
     tourism = models.TourismPlace.objects.all()
     data = {
@@ -78,8 +82,11 @@ def index(request):
         'category':[i.category for i in tourism],
     }
     if request.user.is_authenticated:
-        print(request.user.id," ",request.user.age)
-        recommend = md.Model('ModelUserAgeTourismConcate(Dipake)',data).predict(request.user.id,request.user.age)
+        if model_predict == None:
+            print("Pemanggilan konfigurasi model statistik")
+            model_predict = md.Model('ModelUserAgeTourismConcate(Dipake)',data)
+        
+        recommend = model_predict.predict(request.user.id,request.user.age)
         recommend = models.TourismPlace.objects.filter(pk__in=recommend)
 
     # tourism = models.TourismPlace.objects.values('city').annotate(jum_city=Count('city')).order_by()
@@ -89,7 +96,6 @@ def index(request):
 
 
 #Ticket
-
 def render_pdf(template_src, context_dict={}):
     template = get_template(template_src)
     html = template.render(context_dict)
@@ -114,7 +120,7 @@ def ticket(request):
      return render(request, 'ticket.html')
 
 def desc(request, placeid):
-    global model_statictis
+    global model_statictis_item
     tourism = models.TourismPlace.objects.get(place_id=placeid)
 
     reservation = models.Reservation.objects.all()
@@ -125,10 +131,14 @@ def desc(request, placeid):
     }
 
     # Inisialisasi model hanya sekali
-    if not model_statictis:
-        model_statictis = md.colaborative_calculation_statistik(data,"place")
+    if model_statictis_item == None:
+        print("Pemanggilan konfigurasi model statistik")
+        # 0 user 1 item
+        model_statictis_item = md.colaborative_calculation_statistik(data,"place",1)
     
-    recommend = model_statictis.itemRecommendedByItem(tourism.place_name, 5)
+    recommend = [re.sub('place_','',i) for i in model_statictis_item.itemRecommendedByItem(tourism.place_id, 5)]
+    print(recommend)
+    recommend = models.TourismPlace.objects.filter(pk__in=recommend)
 
     return render(request, "desc.html", {'data':tourism, 'recommend':recommend})
 
