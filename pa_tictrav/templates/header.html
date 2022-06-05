@@ -17,14 +17,14 @@
                 <li class="nav__item">
                     <a href="#discover" class="nav__link">Kota Pariwisata</a>
                 </li>
-                
-                <li class="nav__item">
-                    <a href="{% url 'tictrav:masuk' %}" class="nav__link">Masuk Akun</a>
-                </li>
-
+    
                 {% if user.is_authenticated %}
                     <li class="nav__item">
                         <a href="{% url 'tictrav:keluar' %}" class="nav__link">{{ user }}</a>
+                    </li>
+                {% else %}
+                    <li class="nav__item">
+                        <a href="{% url 'tictrav:masuk' %}" class="nav__link">Masuk Akun</a>
                     </li>
                 {% endif %}
                 

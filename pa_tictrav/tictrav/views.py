@@ -10,12 +10,15 @@ from django.conf import settings
 
 
 # Model DB tictrav
-from tictrav import models
+from tictrav import models, forms
+
 from django.db.models import Count
 
 from model_development import model as md
 
 import re
+
+import random
 
 
 # Create your views here.
@@ -50,14 +53,22 @@ model_predict = None
 def register(request):
      if request.method=='POST':
         _, fullname, age, email, password = request.POST.values()
-
+        
         try:
-            user = models.AccountCustom.objects.create_user(email,password,fullname,age)
+            user = models.AccountCustom.objects.get(email=email)
         except:
             return redirect("/login",{'message':'User telah terdaftar'})
         else:
-            user.save()
-
+            try:
+                user = models.AccountCustom.objects.create_user(email,password,fullname,age)
+                user.save()
+            except:
+                newUserId = random.randint(301, 10000)
+                while(models.AccountCustom.objects.get(id=newUserId)):
+                    newUserId = random.randint(301, 10000)
+                user.id = newUserId
+                user.save()
+            
      return redirect("/login")
 
 
@@ -148,3 +159,21 @@ def coba(request):
 def rekomendasi(request):
     data = models.TourismPlace.objects.all()
     return render(request, "desc.html", {'data':data})
+
+def editProfile(request):
+    if request.method=='POST' and request.user.is_authenticated:
+        _, email, fullname, age, location, password = request.POST.values()
+        user_form = forms.EditUserForm(request.POST, instance=request.user)
+        if user_form.is_valid():
+            user_form.save()
+        
+        return redirect('/edit-profile')
+        
+
+    try:
+        user_form = forms.EditUserForm(instance=request.user)
+    except:
+        return redirect('/login')
+
+    return render(request, "account/editprofile.html",{'user_form':user_form})
+

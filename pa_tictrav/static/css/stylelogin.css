@@ -108,10 +108,12 @@ input[type='submit'] {
   cursor: pointer;
 }
 
-.form input[type='username'],
+.form input[type='text'],
 .form input[type='email'],
-.form input[type='password'] {
+.form input[type='password'],
+.form input[type='number'] {
   inline-size: 100%;
+  margin-bottom: 20px;
 }
 
 /* modules/login.css */
@@ -156,27 +158,21 @@ input[type='submit'] {
   transform: rotate(45deg);
   width: 0.5em;
 }
-.login input[type='username'],
+
 .login input[type='email'],
+.login input[type='text'],
+.login input[type='number'],
 .login input[type='password'] {
   border: 0.0625em solid #e5e5e5;
   padding: 1em 1.25em;
 }
 
-.login input[type='username'] {
-  border-top-left-radius: var(--loginInputBorderRadius);
-  border-top-right-radius: var(--loginInputBorderRadius);
-}
-
-.login input[type='email'] {
-  border-top-left-radius: var(--loginInputBorderRadius);
-  border-top-right-radius: var(--loginInputBorderRadius);
-}
-
+.login input[type='email'],
+.login input[type='text'],
+.login input[type='number'],
 .login input[type='password'] {
-  border-bottom-left-radius: var(--loginInputBorderRadius);
-  border-bottom-right-radius: var(--loginInputBorderRadius);
-  border-top: 0;
+  border-top-left-radius: var(--loginInputBorderRadius);
+  border-top-right-radius: var(--loginInputBorderRadius);
 }
 
 .login input[type='submit'] {
