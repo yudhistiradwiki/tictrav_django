@@ -13,10 +13,9 @@ class EditUserForm(forms.ModelForm):
         model = models.AccountCustom
         fields = ('email','full_name','age','location', 'password')
 
-    def clean_password(self):
-        password = self.cleaned_data.get('password')
-        return password
-
+    """
+        Pengaturan Password
+    """
     def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data['password'])

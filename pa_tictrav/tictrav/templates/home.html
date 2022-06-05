@@ -47,7 +47,7 @@
                 <!--==================== PLACES ====================-->
                 <section class="place section" id="place">
                     <h2 class="section__title">Rekomendasi untuk anda</h2>
-                    <div class="place__container container grid">
+                    <div class="place__container container grid" style="display: flex;">
                         {% for recommend in recommend|dictsortreversed:'rating' %}
                             <!--==================== PLACES CARD 1 ====================-->
                             <div class="place__card">

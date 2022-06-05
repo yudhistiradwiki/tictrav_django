@@ -17,6 +17,9 @@ class UserCreationForm(forms.ModelForm):
 		model = AccountCustom
 		fields = ('email','full_name','age','location')
 
+	"""
+		Validasi konfirmasi password
+	"""
 	def clean_password(self):
 		password = self.cleaned_data.get('password')
 		password2 = self.cleaned_data.get('password2')
@@ -25,6 +28,9 @@ class UserCreationForm(forms.ModelForm):
 			raise ValidationError('Password tidak sama')
 		return password2
 
+	"""
+		Penyimpanan password
+	"""
 	def save(self, commit=True):
 		user = super().save(commit=False)
 		user.set_password(self.cleaned_data['password'])
