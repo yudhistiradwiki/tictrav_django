@@ -12,13 +12,19 @@ from django.conf import settings
 # Model DB tictrav
 from tictrav import models, forms
 
-from django.db.models import Count
+# from django.db.models import Count
 
+# Pemodelan AI
 from model_development import model as md
 
-import re
 
+# Random generator dan pattern
+import re
 import random
+
+
+# Pesan
+from django.contrib import messages
 
 
 # Create your views here.
@@ -54,20 +60,19 @@ def register(request):
      if request.method=='POST':
         _, fullname, age, email, password = request.POST.values()
         
+        """
+            Pengecekan duplikasi email
+        """
         try:
             user = models.AccountCustom.objects.get(email=email)
         except:
-            return redirect("/login",{'message':'User telah terdaftar'})
+            user = models.AccountCustom.objects.create_user(email,password,fullname,age)
+            user.save()
         else:
-            try:
-                user = models.AccountCustom.objects.create_user(email,password,fullname,age)
-                user.save()
-            except:
-                newUserId = random.randint(301, 10000)
-                while(models.AccountCustom.objects.get(id=newUserId)):
-                    newUserId = random.randint(301, 10000)
-                user.id = newUserId
-                user.save()
+            messages.add_message(request, messages.ERROR, 'Duplikasi akun ditemukan. Gunakan akun yang berbeda')
+            return redirect("/login")
+            
+            
             
      return redirect("/login")
 

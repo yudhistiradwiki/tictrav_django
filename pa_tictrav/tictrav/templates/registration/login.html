@@ -38,6 +38,14 @@
         <div class="form-content">
           <div class="login-form">
             <div class="title">Login</div>
+
+
+            {% if form.errors %}
+              <span style="color:#f44;">
+                Akun atau password yang diinput salah.
+              </span>
+            {% endif %}
+
           <form id="login" method="POST" action="{% url 'tictrav:masuk' %}">
             {% csrf_token %}
             <div class="input-boxes">
@@ -59,6 +67,13 @@
       </div>
         <div class="signup-form">
           <div class="title">Signup</div>
+          {% if messages %}
+            <span style="color:#f44;">
+              {% for message in messages%}
+                {{message}}
+              {% endfor %}
+            </span>
+          {% endif %}
         <form id="signup" method="POST" action="{% url 'tictrav:register' %}">
             {% csrf_token %}
             <div class="input-boxes">
