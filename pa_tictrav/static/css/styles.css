@@ -477,6 +477,7 @@ input {
 
 .discover__img {
   transition: var(--img-transition);
+  height: 300px;
 }
 
 .discover__img:hover {

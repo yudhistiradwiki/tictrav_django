@@ -108,7 +108,9 @@
                         {% for cities, tourism in tourisms %}
                             <!--==================== DISCOVER 1 ====================-->
                             <div id="{{ forloop.counter }}" class="discover__card swiper-slide">
-                                <img src="/static/img/discover{{forloop.counter}}.jpg" alt="" class="discover__img">
+                                {% with tourism|first as first_city %}
+                                    <img src="{{first_city.img.url}}" alt="" class="discover__img">
+                                {% endwith %}
                                 <div class="discover__data">
                                     <h2 class="discover__title">{{cities}}</h2>
                                     <span class="discover__description">

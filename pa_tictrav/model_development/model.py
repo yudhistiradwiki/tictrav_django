@@ -10,9 +10,9 @@ import tensorflow as tf
 
 # Model Path
 import os
+import pathlib
 
 from django.http import Http404
-
 
 
 from . import dataPreprocessing as dp
@@ -55,7 +55,13 @@ def quicksort(numpyArray, minIndex, maxIndex, sort='asc',targetIndex=0):
 # Model (Nanti dipindah di dalam folder baru)
 class Model:
     def __init__(self, modelName, data):
+        # Impor model
         self.__model = tf.keras.models.load_model(os.getcwd()+f'//model_development//model//Multiclass//{modelName}.h5')
+
+        # Impor Quantiz Model
+        # self.__model = tf.lite.Interpreter(model_path=str(pathlib.Path(os.getcwd()+f'//model_development//model//Multiclass//')/'ModelUserAgeTourismConcate(Dipake)_QuantVersion}.tflite'))
+        # self.__model.allocate_tensors()
+
         self.__data = pd.DataFrame(data)
 
     def predict(self,userId,age,target=None):

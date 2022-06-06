@@ -1,1 +1,6 @@
-pa_tictrav/model_development/model/qas/
+tictravenv/*
+pa_tictrav/model_development/model/qas/*
+!pa_tictrav/model_development/model/qas/klasifikasi
+pa_tictrav/model_development/model/qas/klasifikasi/*
+!pa_tictrav/model_development/model/qas/klasifikasi/LSTMKlasifikasiKonteksQuants.tflite
+!pa_tictrav/model_development/model/qas/klasifikasi/tokenizerTextClassification.pickle

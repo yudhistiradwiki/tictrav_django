@@ -14,7 +14,8 @@ import os
 import transformers as ts
 import torch
 
-import asyncio
+
+import pathlib
 
 
 
@@ -48,7 +49,12 @@ class chatbot:
 			self.__tokenizerQAS = ts.BertTokenizer.from_pretrained(os.getcwd()+'//model_development//model//qas')
 
 			# Mengambil model klasifikasi
-			self.__modelKlasifikasi = tf.keras.models.load_model(os.getcwd()+'//model_development//model//qas//klasifikasi/ClassificationLSTM.h5')
+			# self.__modelKlasifikasi = tf.keras.models.load_model(os.getcwd()+'//model_development//model//qas//klasifikasi/ClassificationLSTM.h5')
+			"""
+				Menggunakan model klasifikasi yang telah dikompress
+			"""
+			self.__modelKlasifikasi = tf.lite.Interpreter(model_path=str(pathlib.Path(os.getcwd()+'//model_development//model//qas//klasifikasi//')/"LSTMKlasifikasiKonteksQuants.tflite"))
+			self.__modelKlasifikasi.allocate_tensors()
 
 			# Mengambil model yang telah di training
 			self.__modelQAS = ts.BertForQuestionAnswering.from_pretrained(os.getcwd()+'//model_development//model//qas')
@@ -95,8 +101,20 @@ class chatbot:
 		Klasifikasi konteks pertanyaan yang merujuk pada tempat wisata
 	"""
 	def klasifikasiKonteks(self, pertanyaan):
-		X = tf.keras.preprocessing.sequence.pad_sequences(self.__tokenizerKlasifikasi.texts_to_sequences([pertanyaan.casefold()]),self.__maxPad)
-		prediksi = [i+1 for i in np.argmax(self.__modelKlasifikasi.predict(X), axis = 1)]
+		X = tf.keras.preprocessing.sequence.pad_sequences(self.__tokenizerKlasifikasi.texts_to_sequences([pertanyaan.casefold()]),self.__maxPad).astype(np.float32)
+
+		# Klasifikasi Menggunakan TFLITE
+		prediksi = []
+
+		input_index = self.__modelKlasifikasi.get_input_details()[0]['index']
+		output_index = self.__modelKlasifikasi.get_output_details()[0]['index']
+
+		self.__modelKlasifikasi.set_tensor(input_index, X)
+		self.__modelKlasifikasi.invoke()
+		prediksi.append(np.argmax(self.__modelKlasifikasi.get_tensor(output_index))+1)
+		
+		# Klasifikasi Model Tanpa Optimisasi
+		# prediksi = [i+1 for i in np.argmax(self.__modelKlasifikasi.predict(X), axis = 1)]
 		return prediksi
 
 	"""
