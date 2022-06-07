@@ -1,6 +1,8 @@
 .section {
 	position: relative;
-	height: 100vh;
+	height: 100%;
+	background: white;
+	margin-top: 10%;
 }
 
 .section .section-center {
@@ -14,14 +16,10 @@
 
 #booking {
 	font-family: 'Montserrat', sans-serif;
-	background-color: rgb(255, 254, 254);
-	background-size: cover;
-	background-position: center;
 }
 
 #booking::before {
-	content: '';
-	position: absolute;
+	position: relative;
 	left: 0;
 	right: 0;
 	bottom: 0;
@@ -68,6 +66,8 @@
 	box-shadow: none;
 	font-weight: 400;
 	color: #101113;
+	width: 100%;
+	padding: 2%;
 }
 
 .booking-form .form-control::-webkit-input-placeholder {

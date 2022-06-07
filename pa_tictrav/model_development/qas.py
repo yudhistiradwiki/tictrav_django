@@ -124,7 +124,6 @@ class chatbot:
 		# Klasifikasi unutk mendapatkan konteks label pertanyaan
 		label = self.klasifikasiKonteks(pertanyaan)
 
-		print([label[0]])
 		# Pengambilan konteks
 		konteks = self.__data[self.__data.place_id == label[0]]['description'].values[0]
 
@@ -138,10 +137,5 @@ class chatbot:
 			+str(int(data.price))+" dan memiliki rating "+str(data.rating)\
 			 for data in datas]
   			})
-
-		print(df)
-		print("\n\n\n")
-		print(df['description'])
 		df['description'] = df['description'].apply(dataTransform)
-		print(df['description'])
 		return df

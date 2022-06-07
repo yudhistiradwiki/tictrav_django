@@ -1,10 +1,10 @@
 {% extends 'template.html' %}
 {% load static %}
-
+{% block title %}Edit Profile{% endblock %}
 {% block content %}
     <body class="align" style="background-image:url({% static 'img/homebali.jpg' %});background-repeat:no-repeat;background-attachment: fixed;">
         <div class="grid" style="max-inline-size: 60rem!important;">
-          <img src="{% static 'img/icon2.png' %}" width="350" height="350"/ style="margin: auto;">
+          <img src="{% static 'img/icon2.png' %}" width="350" height="350" style="margin: auto;">
           <form action="{% url 'tictrav:editProfile' %}" method="POST" class="form login">
             {% csrf_token %}
             <header class="login__header">

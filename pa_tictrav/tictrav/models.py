@@ -7,13 +7,19 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 # Create your models here.
 """
+    Opsi status
+"""
+class StatusOption(models.TextChoices):
+        PROCESS = "Dalam Proses",
+        FINISH = "Selesai"
+"""
     Kelas untuk mengatur pembuatan akun
 """
 class AuthManager(BaseUserManager):
     """
         Pembuatan Akun User (Registrasi)
     """
-    def create_user(self, email, password, full_name=None, age=None, location=None):
+    def create_user(self, email, password, full_name=None, age=None, location=None, phone_number=None):
         if not email:
             raise ValueError("Kolom email tidak boleh kosong")
         if not password:
@@ -23,7 +29,8 @@ class AuthManager(BaseUserManager):
         user = self.model(email=email, 
                           full_name=full_name, 
                           age=age,
-                          location=location)
+                          location=location,
+                          phone_number=phone_number)
         
         user.set_password(password)
         user.save()
@@ -49,6 +56,7 @@ class AuthManager(BaseUserManager):
 class AccountCustom(AbstractBaseUser):
     email = models.EmailField(verbose_name=_("email"),max_length=254, unique=True)
     full_name = models.CharField(max_length=300, unique=True, null=True)
+    phone_number = models.CharField(max_length=20, null=True)
     age = models.IntegerField(null=True)
     location = models.TextField(null=True)
     created = models.DateTimeField(default=timezone.now)
@@ -95,14 +103,11 @@ class TourismPlace(models.Model):
     Tabel Sekunder
 """
 class Reservation(models.Model):
-    class StatusOption(models.TextChoices):
-        PROCESS = "Dalam Proses",
-        FINISH = "Selesai"
-
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     place = models.ForeignKey(TourismPlace, on_delete=models.CASCADE)
     place_ratings = models.IntegerField(default=0)
     status = models.CharField(max_length=100,choices=StatusOption.choices,default=StatusOption.PROCESS)
+    due_date = models.DateTimeField(null=True)
     time = models.DateTimeField(auto_now_add=True, null=True)
     
     def __str__(self):
