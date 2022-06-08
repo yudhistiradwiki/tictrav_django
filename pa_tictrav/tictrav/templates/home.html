@@ -117,6 +117,10 @@
                                             {{ tourism|length }} tours available
                                     </span>
                                 </div>
+
+                                <a href="{% url 'tictrav:cityWisata' cities %}" class="button button--flex place__button">
+                                    <i class="ri-arrow-right-line"></i>
+                                </a>
                             </div>
 
                         {% endfor %}

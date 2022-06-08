@@ -4,7 +4,7 @@
 {% block content %}
 <!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="{% static 'css/stylepemesanan.css' %}" />
-	<body class="align" style="background-image:url({% static 'img/homebali.jpg' %});background-repeat:no-repeat;background-attachment: fixed;">
+	<body class="align" style="background-image:url({% static 'img/homebali.jpg' %});background-repeat:no-repeat;background-attachment: fixed;background-size: cover;">
 		<div class="grid" style="max-inline-size: 60rem;margin: auto;">
 		<div id="booking">
 				<div class="container">
@@ -50,11 +50,11 @@
 
 								<div class="form-btn">
 									<input type="submit" class="submit-btn" value="Book Now"/>
-									<a href="{% url 'tictrav:home' %}" style="display: flex;margin-top:20px">
+									<a href="{% url 'tictrav:deskripsi' tourism.place_id %}" style="display: flex;margin-top:20px">
 					                  <div>
 					                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z" fill="rgba(0,0,0,1)"/></svg> 
 					                  </div>
-					                  Back to Home
+					                  Back
 					                </a>
 								</div>
 							</form>

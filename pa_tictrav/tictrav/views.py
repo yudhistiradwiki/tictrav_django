@@ -127,6 +127,9 @@ def editProfile(request):
 
     return render(request, "account/editprofile.html",{'user_form':user_form})
 
+def getWisataByKota(request, city):
+    tourism = models.TourismPlace.objects.filter(city=city)
+    return render(request, "kotawisata.html",{'tourism':tourism,'city':city}) 
 
 """
     Pemesanan reservasi
@@ -134,7 +137,6 @@ def editProfile(request):
 # Reservasi
 def reservasi(request,placeid):
     tourism = models.TourismPlace.objects.get(place_id=placeid)
-    user = models.AccountCustom.objects.get (id = request.user.id)
     if request.method == 'POST' and request.user.is_authenticated:
         _, fullname, email, phone, location, due_date = request.POST.values()
         
@@ -145,8 +147,10 @@ def reservasi(request,placeid):
         account.email = email
         account.phone_number = phone
         account.save()
-        reservasi_user = models.Reservation.objects.create(user = user , place = tourism, due_date = request.POST['due_date']) 
+        
+        reservasi_user = models.Reservation.objects.create(user = request.user , place = tourism, due_date = request.POST['due_date']) 
         reservasi_user.save()
+
         return redirect(f'/desc/{placeid}')
     try:
         reservasi_form =  forms.ReservationForm(instance=request.user)

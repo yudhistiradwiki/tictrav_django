@@ -15,5 +15,6 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='/login'), name='keluar'),
     path('register/', views.register, name='register'),
     path('edit-profile/', views.editProfile, name='editProfile'),
+    path('kota-<str:city>/', views.getWisataByKota, name='cityWisata'),
     path('reservasi-tempat-wisata/<int:placeid>/', views.reservasi, name='reservasiTiket'),
 ]
