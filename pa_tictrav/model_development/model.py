@@ -19,7 +19,7 @@ from . import dataPreprocessing as dp
 
 """ 
 Sort:
-	Quicksort Referensi GeeksforGeeks dan Sort
+    Quicksort Referensi GeeksforGeeks dan Sort
 """
 def parti(numpyArray, minIndex, maxIndex,sort,targetIndex):
     # Inisialisasi pivot dengan nilai index terakhir
@@ -56,11 +56,11 @@ def quicksort(numpyArray, minIndex, maxIndex, sort='asc',targetIndex=0):
 class Model:
     def __init__(self, modelName, data):
         # Impor model
-        self.__model = tf.keras.models.load_model(os.getcwd()+f'//model_development//model//Multiclass//{modelName}.h5')
+        # self.__model = tf.keras.models.load_model(os.getcwd()+f'//model_development//model//Multiclass//{modelName}.h5')
 
         # Impor Quantiz Model
-        # self.__model = tf.lite.Interpreter(model_path=str(pathlib.Path(os.getcwd()+f'//model_development//model//Multiclass//')/'ModelUserAgeTourismConcate(Dipake)_QuantVersion}.tflite'))
-        # self.__model.allocate_tensors()
+        self.__model = tf.lite.Interpreter(model_path=str(pathlib.Path(os.getcwd()+f'//model_development//model//Optimisasi//')/'ModelUserAgeTourismConcate(Dipake)_QuantVersion.tflite'))
+        self.__model.allocate_tensors()
 
         self.__data = pd.DataFrame(data)
 
@@ -78,21 +78,22 @@ class Model:
             else:
         """
 
-		# self.__model.predict(x=x)
+        # self.__model.predict(x=x)
 
-		# Penyeleksian fitur data yang akan digunakan untuk prediksi hasil model.
-        data = self.generateUserData(userId, age)
-        recommend = self.getRecommendation(userId,features,data)
-        recommend = [i for i in recommend[:5]]       
-        # try:
-			# print(f'Recommended sebelum sort: {recommend}')
+        # Penyeleksian fitur data yang akan digunakan untuk prediksi hasil model.
+        data = self.generateUserData(userId, age)     
+        try:
+            recommend = self.getRecommendation(userId,features,data)
+
+            # print(f'Recommended sebelum sort: {recommend}')
             # print(recommend)
-        # except:
-        #     raise Http404()
-        # else:
-        """
-			     Diisi dengan rekomendasi berdasarkan trending sekarang
-        """
+        except:
+            recommend = None
+        else:
+            recommend = [i for i in recommend[:5]]
+            """
+                 Diisi dengan rekomendasi berdasarkan trending sekarang
+            """
         return recommend
 
     """
@@ -101,10 +102,10 @@ class Model:
     def generateUserData(self, userId, age):
         length = self.__data.shape[0]
         newDf = pd.DataFrame({
-	        'user_id':[userId for i in range(length)],
-	        'place_id':[i for i in self.__data.place_id],
-	        'age':[age for i in range(length)],
-	        'category':[i for i in self.__data.category]
+            'user_id':[userId for i in range(length)],
+            'place_id':[i for i in self.__data.place_id],
+            'age':[age for i in range(length)],
+            'category':[i for i in self.__data.category]
         })
         newDf['category'] = newDf['category'].replace([3, 2, 5, 4, 1],[2, 1, 4, 3, 0])
         return newDf
@@ -115,10 +116,29 @@ class Model:
     def getRecommendation(self, userId, fitur, data):
         targetUser = data[data['user_id']==userId]
         placeId = np.array(targetUser['place_id'])
-        x = [targetUser[i] for i in fitur]
-        recommendation = self.__model.predict(x=x)
-        placeRecommendation = [[placeId[i],np.argmax(recommendation[i]),max(recommendation[i])] for i in range(len(recommendation))]
+        # x = [targetUser[i] for i in fitur]
+        # recommendation = self.__model.predict(x=x)
 
+        # Optimisasi Model
+        input_index = [self.__model.get_input_details()[0]['index'],
+                   self.__model.get_input_details()[1]['index'],
+                   self.__model.get_input_details()[2]['index']
+                  ]
+
+        output_index = self.__model.get_output_details()[0]['index']
+    
+        recommendation = []
+        for i in range(data.shape[0]):
+            self.__model.set_tensor(input_index[0], np.expand_dims(data.iloc[i:i+1,0], axis=1).astype(np.float32))
+            self.__model.set_tensor(input_index[1], np.expand_dims(data.iloc[i:i+1,1], axis=1).astype(np.float32))
+            self.__model.set_tensor(input_index[2], np.expand_dims(data.iloc[i:i+1,2], axis=1).astype(np.float32))
+            self.__model.invoke()
+            recommendation.append(self.__model.get_tensor(output_index))
+
+        # print(recommendation)
+        placeRecommendation = [[placeId[i],np.argmax(recommendation[i][0]),max(recommendation[i][0])] for i in range(len(recommendation))]
+
+        # print(placeRecommendation)
         # Penyortiran rekomendasi tempat
         quicksort(placeRecommendation,0,len(placeRecommendation)-1,'desc',2)
         quicksort(placeRecommendation,0,len(placeRecommendation)-1,'desc',1)
@@ -148,6 +168,7 @@ class colaborative_calculation_statistik:
         else:
             self.__target = target
             self.__df_data  = dp.DataPreprocessing(data).transformDataByTarget(target=self.__target,value="place_ratings",dropby=["user"])
+            self.__corr = self.__df_data.corr()
     """
         Kumpulan fungsi untuk melakukan perhitungan aritmatika menggunakan cosine similarity, 
         dan pearson corr
@@ -190,9 +211,8 @@ class colaborative_calculation_statistik:
     def itemRecommendedByItem(self, placeName, k):
         if(not (placeName or k)):
             return None
-        __data = self.__df_data.corr()
-        recommend = pd.DataFrame(__data.iloc[__data.columns.get_loc(f'{self.__target}_{placeName}'),
-                                           :]).sort_values(by=__data.iloc[__data.columns.get_loc(f'{self.__target}_{placeName}'),:].name,
+        recommend = pd.DataFrame(self.__corr.iloc[self.__corr.columns.get_loc(f'{self.__target}_{placeName}'),
+                                           :]).sort_values(by=self.__corr.iloc[self.__corr.columns.get_loc(f'{self.__target}_{placeName}'),:].name,
                                                            ascending=False)[1:k+1]
         return recommend.index
     
