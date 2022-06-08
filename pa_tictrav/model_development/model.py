@@ -81,7 +81,8 @@ class Model:
         # self.__model.predict(x=x)
 
         # Penyeleksian fitur data yang akan digunakan untuk prediksi hasil model.
-        data = self.generateUserData(userId, age)     
+        data = self.generateUserData(userId, age)    
+
         try:
             recommend = self.getRecommendation(userId,features,data)
 
@@ -126,12 +127,13 @@ class Model:
                   ]
 
         output_index = self.__model.get_output_details()[0]['index']
-    
+        
+
         recommendation = []
         for i in range(data.shape[0]):
-            self.__model.set_tensor(input_index[0], np.expand_dims(data.iloc[i:i+1,0], axis=1).astype(np.float32))
-            self.__model.set_tensor(input_index[1], np.expand_dims(data.iloc[i:i+1,1], axis=1).astype(np.float32))
-            self.__model.set_tensor(input_index[2], np.expand_dims(data.iloc[i:i+1,2], axis=1).astype(np.float32))
+            self.__model.set_tensor(input_index[0], np.asarray([data.iloc[i:i+1,0]]).astype(np.float32))
+            self.__model.set_tensor(input_index[1], np.asarray([data.iloc[i:i+1,1]]).astype(np.float32))
+            self.__model.set_tensor(input_index[2], np.asarray([data.iloc[i:i+1,2]]).astype(np.float32))
             self.__model.invoke()
             recommendation.append(self.__model.get_tensor(output_index))
 
