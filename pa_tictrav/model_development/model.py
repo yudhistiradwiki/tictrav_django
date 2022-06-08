@@ -81,19 +81,18 @@ class Model:
 		# self.__model.predict(x=x)
 
 		# Penyeleksian fitur data yang akan digunakan untuk prediksi hasil model.
-        data = self.generateUserData(userId, age)        
-        try:
-            recommend = self.getRecommendation(userId,features,data)
-
+        data = self.generateUserData(userId, age)
+        recommend = self.getRecommendation(userId,features,data)
+        recommend = [i for i in recommend[:5]]       
+        # try:
 			# print(f'Recommended sebelum sort: {recommend}')
             # print(recommend)
-        except:
-            raise Http404()
-        else:
-            recommend = [i for i in recommend[:5]]
-            """
+        # except:
+        #     raise Http404()
+        # else:
+        """
 			     Diisi dengan rekomendasi berdasarkan trending sekarang
-            """
+        """
         return recommend
 
     """

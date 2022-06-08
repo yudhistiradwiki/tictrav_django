@@ -1,10 +1,7 @@
+from datetime import datetime
 from django import forms
 
 from tictrav import models
-
-class DateTimeInput(forms.DateTimeInput):
-        input_type = 'datetime'
-
 
 
 class EditUserForm(forms.ModelForm):
@@ -30,9 +27,9 @@ class EditUserForm(forms.ModelForm):
 
 
 class ReservationForm(forms.ModelForm):
-    user = forms.IntegerField()
-    place = forms.IntegerField()
-    due_date = forms.DateTimeField(required=False, widget=forms.TextInput(attrs={'type':'datetime-local'}))
+    user_id = forms.IntegerField()
+    place_id = forms.IntegerField()
+    due_date = forms.DateTimeField(required=False, widget=forms.TextInput(attrs={"type":"datetime-local"}))
     
     class Meta:
         model = models.Reservation

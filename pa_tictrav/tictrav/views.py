@@ -1,3 +1,4 @@
+from ctypes.wintypes import INT
 from django.shortcuts import render, redirect
 from django.http.response import HttpResponse
 from io import BytesIO
@@ -21,7 +22,7 @@ from model_development import model as md
 # Random generator dan pattern
 import re
 import random
-
+import datetime
 
 # Pesan
 from django.contrib import messages
@@ -133,7 +134,7 @@ def editProfile(request):
 # Reservasi
 def reservasi(request,placeid):
     tourism = models.TourismPlace.objects.get(place_id=placeid)
-
+    user = models.AccountCustom.objects.get (id = request.user.id)
     if request.method == 'POST' and request.user.is_authenticated:
         _, fullname, email, phone, location, due_date = request.POST.values()
         
@@ -144,18 +145,8 @@ def reservasi(request,placeid):
         account.email = email
         account.phone_number = phone
         account.save()
-
-
-        reservasi_form = forms.ReservationForm({
-            'user':request.user.id,
-            'place':placeid,
-            'due_date':due_date,
-        }, instance=request.user)
-
-        if reservasi_form.is_valid():
-            print("Valid Reservation Form")
-            reservasi_form.save()
-
+        reservasi_user = models.Reservation.objects.create(user = user , place = tourism, due_date = request.POST['due_date']) 
+        reservasi_user.save()
         return redirect(f'/desc/{placeid}')
     try:
         reservasi_form =  forms.ReservationForm(instance=request.user)
