@@ -6,7 +6,7 @@ from django.views import View
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.contrib import messages
-# from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
 
 
@@ -70,7 +70,6 @@ def logout(request):
     return redirect("/")
 
 #Home
-# @login_required(login_url=settings.LOGIN_URL)
 def index(request):
     global model_predict
     recommend = None
@@ -113,8 +112,9 @@ def desc(request, placeid):
     return render(request, "desc.html", {'data':tourism, 'recommend':recommend})
 
 
+@login_required(login_url=settings.LOGIN_URL)
 def editProfile(request):
-    if request.method=='POST' and request.user.is_authenticated:
+    if request.method=='POST':
         _, email, fullname, age, location, password = request.POST.values()
         user_form = forms.EditUserForm(request.POST, instance=request.user)
         if user_form.is_valid():
@@ -127,6 +127,7 @@ def editProfile(request):
 
     return render(request, "account/editprofile.html",{'user_form':user_form})
 
+
 def getWisataByKota(request, city):
     tourism = models.TourismPlace.objects.filter(city=city)
     return render(request, "kotawisata.html",{'tourism':tourism,'city':city}) 
@@ -135,9 +136,10 @@ def getWisataByKota(request, city):
     Pemesanan reservasi
 """
 # Reservasi
+@login_required(login_url=settings.LOGIN_URL)
 def reservasi(request,placeid):
     tourism = models.TourismPlace.objects.get(place_id=placeid)
-    if request.method == 'POST' and request.user.is_authenticated:
+    if request.method == 'POST':
         _, fullname, email, phone, location, due_date = request.POST.values()
         
         # Update akun bila ada perubahan
@@ -152,11 +154,9 @@ def reservasi(request,placeid):
         reservasi_user.save()
 
         return redirect(f'/desc/{placeid}')
-    try:
-        reservasi_form =  forms.ReservationForm(instance=request.user)
-    except:
-        return redirect('/login')
 
+
+    reservasi_form =  forms.ReservationForm(instance=request.user)
     return render(request, "pemesanan.html",{'reservation':reservasi_form,'tourism':tourism})
 
 

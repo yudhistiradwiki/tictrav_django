@@ -8,7 +8,7 @@ import json
 
 from django.views.decorators.csrf import csrf_exempt
 
-from django.http import Http404
+from django.contrib import messages
 
 
 from django.core.exceptions import PermissionDenied
@@ -28,18 +28,19 @@ def getChatbotResponse(request):
 	if request.method=='POST':
 		pertanyaan = request.POST['pertanyaan']
 
-		print(pertanyaan)
+		tourism = models.TourismPlace.objects.all()
 		
 		if(not chatbot):
 			try:
-				tourism = models.TourismPlace.objects.all()
-			except:
-				raise Http404()
-			else:
 				chatbot = qas.chatbot(tourism)
+			except:
+				response = 'Chatbot sedang tidak dapat digunakan. Mohon maaf atas ketidaknyamanannya.'
+			else:
+				response = chatbot.getJawaban(pertanyaan)
+				
 
 		return JsonResponse({
-			'jawaban': chatbot.getJawaban(pertanyaan)
+			'jawaban': response
 		})
 	
 	raise PermissionDenied

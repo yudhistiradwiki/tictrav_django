@@ -12,8 +12,6 @@ import tensorflow as tf
 import os
 import pathlib
 
-from django.http import Http404
-
 
 from . import dataPreprocessing as dp
 
