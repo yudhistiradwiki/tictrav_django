@@ -93,17 +93,11 @@ def desc(request, placeid):
     global model_statictis_item
     tourism = models.TourismPlace.objects.get(place_id=placeid)
 
-    reservation = models.Reservation.objects.all()
-    data = {
-        'user':[i.user for i in reservation],
-        'place':[i.place for i in reservation],
-        'place_ratings':[i.place_ratings for i in reservation]
-    }
-
     # Inisialisasi model hanya sekali
     if model_statictis_item == None:
+        reservation = models.Reservation.objects.values_list('user','place','place_ratings')
         # 0 user 1 item
-        model_statictis_item = md.colaborative_calculation_statistik(data,"place",1)
+        model_statictis_item = md.colaborative_calculation_statistik(reservation,"place",1)
 
     # Penghapusan karakter place_ hasil get_dummies
     recommend = [re.sub('place_','',i) for i in model_statictis_item.itemRecommendedByItem(tourism.place_id, 5)]

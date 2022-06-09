@@ -113,9 +113,8 @@ class Model:
         Kumpulan fungsi modul yang digunakan di backend nantinya untuk melakukan pengolahan data
     """
     def getRecommendation(self, userId, fitur, data):
-        targetUser = data[data['user_id']==userId]
-        placeId = np.array(targetUser['place_id'])
-        # x = [targetUser[i] for i in fitur]
+        placeId = np.array(data['place_id'])
+        # x = [data[i] for i in fitur]
         # recommendation = self.__model.predict(x=x)
 
         # Optimisasi Model
@@ -225,12 +224,11 @@ class colaborative_calculation_statistik:
             return None
 
         listSimItem = []
-        __data = self.__df_data.T
-        placeWisat = list(__data.index)
+        placeWisat = list(self.__df_data.T.index)
 
-        item1 = np.array(__data)[list(__data.index).index(f"{target}_{placeName}"),:]
+        item1 = np.array(self.__df_data)[list(self.__df_data.index).index(f"{target}_{placeName}"),:]
         for i in placeWisat:
-            item2 = np.array(__data)[list(__data.index).index(i),:]
+            item2 = np.array(self.__df_data)[list(self.__df_data.index).index(i),:]
             listSimItem.append((i,
                                 np.dot(item1,item2,)/(np.linalg.norm(item1)*np.linalg.norm(item2))))
         

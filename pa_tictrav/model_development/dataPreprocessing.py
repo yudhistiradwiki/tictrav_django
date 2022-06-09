@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 
 class DataPreprocessing:
 	def __init__(self, data):
-		self.__data = pd.DataFrame(data)
+		self.__data = pd.DataFrame(list(data),columns=['user','place','place_ratings'])
 
 	def dropNull(self, axis=1):
 		data = self.__data.dropna(axis=axis)
@@ -19,6 +19,7 @@ class DataPreprocessing:
 		Alternatif dapat menggunakan matriks transpose
 	"""
 	def transformDataByTarget(self, target=None, value=None, dropby=[]):
+		print(self.__data)
 		# Pengecekan apakah target dan value tidak kosong
 		if(not (target or value)):
 			return None
