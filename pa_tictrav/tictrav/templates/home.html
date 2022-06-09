@@ -47,11 +47,11 @@
                 <!--==================== PLACES ====================-->
                 <section class="place section" id="place">
                     <h2 class="section__title">Rekomendasi untuk anda</h2>
-                    <div class="place__container container grid" style="display: flex;">
+                    <div class="place__container container grid" style="display: flex;flex-wrap:wrap;">
                         {% for recommend in recommend|dictsortreversed:'rating' %}
                             <!--==================== PLACES CARD 1 ====================-->
                             <div class="place__card">
-                                <img src="{{recommend.img.url}}" alt="" class="place__img">
+                                <img src="{{recommend.img.url}}" alt="picture-{{recommend.place_name}}" width="467" height="263" class="place__img">
                                 
                                 <div class="place__content">
                                     <span class="place__rating">

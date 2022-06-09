@@ -80,11 +80,17 @@ def index(request):
         'category':[i.category for i in tourism],
     }
     if request.user.is_authenticated:
+        personal = [i.category for i in models.personalization.objects.filter(user=request.user)]
+
         if model_predict == None:
             model_predict = md.Model('ModelUserAgeTourismConcate(Dipake)',data)
         
         recommend = model_predict.predict(request.user.id,request.user.age)
-        recommend = models.TourismPlace.objects.filter(pk__in=recommend)
+        if personal:
+            recommend = models.TourismPlace.objects.filter(pk__in=recommend, category__in=personal)
+        else:
+            recommend = models.TourismPlace.objects.filter(pk__in=recommend)
+
 
     # tourism = models.TourismPlace.objects.values('city').annotate(jum_city=Count('city')).order_by()
     return render(request, 'home.html',{'tourism': tourism,'recommend':recommend})

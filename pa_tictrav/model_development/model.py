@@ -86,7 +86,7 @@ class Model:
         except:
             recommend = None
         else:
-            recommend = [i for i in recommend[:5]]
+            recommend = [i for i in recommend[:20]]
             """
                  Diisi dengan rekomendasi berdasarkan trending sekarang
             """
