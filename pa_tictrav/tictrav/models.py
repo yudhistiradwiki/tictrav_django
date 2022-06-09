@@ -119,6 +119,6 @@ class personalization(models.Model):
     category = models.TextField()
 
     def __str__(self):
-      return "{} {} ".format(self.user_Id, self.category)
+      return "{}".format(self.user)
     
 

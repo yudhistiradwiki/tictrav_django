@@ -122,6 +122,34 @@ def editProfile(request):
     return render(request, "account/editprofile.html",{'user_form':user_form})
 
 
+@login_required(login_url=settings.LOGIN_URL)
+def personalize(request):
+    personal = [i.category for i in models.personalization.objects.filter(user=request.user)]
+
+
+    if request.method=='POST':
+        userCategory = []
+        for i in request.POST.getlist('kategori'):
+            userCategory.append(i)
+
+        for i in personal:
+            if(i not in userCategory):
+                models.personalization.objects.filter(user=request.user,category=i).delete()
+
+        for i in userCategory:
+            if(i not in personal):
+                personalDB = models.personalization(user=request.user,category=i)
+                personalDB.save()
+
+
+
+
+        return redirect('/personalization')
+
+    category = models.TourismPlace.objects.all()
+    
+    return render(request, "account/personalisasi.html",{'categories':category,'personal':personal})
+
 def getWisataByKota(request, city):
     tourism = models.TourismPlace.objects.filter(city=city)
     return render(request, "kotawisata.html",{'tourism':tourism,'city':city}) 

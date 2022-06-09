@@ -83,9 +83,6 @@ class Model:
 
         try:
             recommend = self.getRecommendation(userId,features,data)
-
-            # print(f'Recommended sebelum sort: {recommend}')
-            # print(recommend)
         except:
             recommend = None
         else:
@@ -134,10 +131,9 @@ class Model:
             self.__model.invoke()
             recommendation.append(self.__model.get_tensor(output_index))
 
-        # print(recommendation)
+
         placeRecommendation = [[placeId[i],np.argmax(recommendation[i][0]),max(recommendation[i][0])] for i in range(len(recommendation))]
 
-        # print(placeRecommendation)
         # Penyortiran rekomendasi tempat
         quicksort(placeRecommendation,0,len(placeRecommendation)-1,'desc',2)
         quicksort(placeRecommendation,0,len(placeRecommendation)-1,'desc',1)

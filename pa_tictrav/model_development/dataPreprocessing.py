@@ -19,7 +19,6 @@ class DataPreprocessing:
 		Alternatif dapat menggunakan matriks transpose
 	"""
 	def transformDataByTarget(self, target=None, value=None, dropby=[]):
-		print(self.__data)
 		# Pengecekan apakah target dan value tidak kosong
 		if(not (target or value)):
 			return None

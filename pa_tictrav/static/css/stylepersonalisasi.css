@@ -14,9 +14,6 @@
 
 #booking {
 	font-family: 'Montserrat', sans-serif;
-	background-color: rgb(255, 254, 254);
-	background-size: cover;
-	background-position: center;
 }
 
 #booking::before {
@@ -26,7 +23,6 @@
 	right: 0;
 	bottom: 0;
 	top: 0;
-	background: silver;
 }
 
 .booking-form {
