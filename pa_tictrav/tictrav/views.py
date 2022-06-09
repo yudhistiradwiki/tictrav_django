@@ -106,7 +106,7 @@ def desc(request, placeid):
         model_statictis_item = md.colaborative_calculation_statistik(reservation,"place",1)
 
     # Penghapusan karakter place_ hasil get_dummies
-    recommend = [re.sub('place_','',i) for i in model_statictis_item.itemRecommendedByItem(tourism.place_id, 5)]
+    recommend = model_statictis_item.itemRecommendedByItem(tourism.place_id, 5)
     recommend = models.TourismPlace.objects.filter(pk__in=recommend)
 
     return render(request, "desc.html", {'data':tourism, 'recommend':recommend})

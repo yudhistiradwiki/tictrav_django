@@ -24,7 +24,7 @@ class DataPreprocessing:
 			return None
 
 		# Pengubahan data tourism place menjadi kolom, dan menghapus kolom place_name
-		data_transform = pd.get_dummies(self.__data.copy(), columns=[target])
+		data_transform = pd.get_dummies(self.__data.copy(),prefix=[None],columns=[target])
 
 		# Mendapatkan index target dan value yang akan dimasukan ke dala target
 		indexValue = list(data_transform.columns).index(value)
@@ -35,10 +35,10 @@ class DataPreprocessing:
 
 		for i in range(self.__data.shape[0]):
 			if(data_transform.iloc[currentIndexUser,0] == self.__data.iloc[i,0]):
-				data_transform.iloc[currentIndexUser,data_transform.columns.get_loc(f'{target}_{self.__data.iloc[i,indexTarget]}')]=data_transform.iloc[i,indexValue]
+				data_transform.iloc[currentIndexUser,data_transform.columns.get_loc(self.__data.iloc[i,indexTarget])]=data_transform.iloc[i,indexValue]
 			else:
 				currentIndexUser = self.__data[self.__data.user == data_transform.iloc[i,0]].iloc[0,:].name
-				data_transform.iloc[currentIndexUser,data_transform.columns.get_loc(f'{target}_{self.__data.iloc[i,indexTarget]}')]=data_transform.iloc[i,indexValue]
+				data_transform.iloc[currentIndexUser,data_transform.columns.get_loc(self.__data.iloc[i,indexTarget])]=data_transform.iloc[i,indexValue]
 
 		# Penghapusan duplikasi data berdasarkan nilai dropby dan penghapusan kolom value
 		data_transform = data_transform.drop_duplicates(subset=dropby)

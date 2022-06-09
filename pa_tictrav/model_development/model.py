@@ -206,8 +206,8 @@ class colaborative_calculation_statistik:
     def itemRecommendedByItem(self, placeName, k):
         if(not (placeName or k)):
             return None
-        recommend = pd.DataFrame(self.__corr.iloc[self.__corr.columns.get_loc(f'{self.__target}_{placeName}'),
-                                           :]).sort_values(by=self.__corr.iloc[self.__corr.columns.get_loc(f'{self.__target}_{placeName}'),:].name,
+        recommend = pd.DataFrame(self.__corr.iloc[self.__corr.columns.get_loc(placeName),
+                                           :]).sort_values(by=self.__corr.iloc[self.__corr.columns.get_loc(placeName),:].name,
                                                            ascending=False)[1:k+1]
         return recommend.index
     
@@ -222,7 +222,7 @@ class colaborative_calculation_statistik:
         listSimItem = []
         placeWisat = list(self.__df_data.T.index)
 
-        item1 = np.array(self.__df_data)[list(self.__df_data.index).index(f"{target}_{placeName}"),:]
+        item1 = np.array(self.__df_data)[list(self.__df_data.index).index(placeName),:]
         for i in placeWisat:
             item2 = np.array(self.__df_data)[list(self.__df_data.index).index(i),:]
             listSimItem.append((i,
