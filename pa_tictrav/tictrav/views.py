@@ -212,3 +212,16 @@ class ViewPDF(View):
 def ticket(request):
      return render(request, 'ticket.html')
 
+
+# Custom error
+def handler404(request, exception, template_name='error/404.html'):
+    return render(request, template_name)
+
+def handler500(request, template_name='error/500.html'):
+    return render(request, template_name)
+
+def handler403(request, exception, template_name='error/403.html'):
+    return render(request, template_name)
+
+def handler400(request, exception, template_name='error/400.html'):
+    return render(request, template_name)

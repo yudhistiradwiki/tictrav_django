@@ -1054,3 +1054,26 @@ input {
   }
 }
 
+.error-div{
+  margin:10% 5%
+}
+
+.error-div h1, .error-div h4, .error-div a{
+  color:white;
+}
+
+.error-div h1{
+  font-size:10rem;
+  font-weight:bold;
+}
+
+.error-div h4{
+  font-size: 1.5rem;
+}
+
+.error-div a{
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+}
+
+

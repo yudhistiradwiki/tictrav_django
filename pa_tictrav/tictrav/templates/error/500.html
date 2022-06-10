@@ -1,0 +1,14 @@
+{% extends 'template.html' %}
+{% load static %}
+{% block title %}Internal Server Error{% endblock %}
+{% block content %}
+<body class="align" class="background-image" style="background-image:url({% static 'img/homebali.jpg' %});background-repeat:no-repeat;
+  background-attachment: fixed;
+  background-size: cover;">
+	<div class="grid error-div">
+		<h1>500</h1>
+		<p>Mohon maaf terjadi kesalahan pada server<a href="{% url 'tictrav:home' %}">Home</a></p>
+		
+	</div>
+</body>
+{% endblock %}
