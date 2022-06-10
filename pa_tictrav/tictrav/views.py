@@ -205,7 +205,7 @@ data = {
 
 class ViewPDF(View):
     def get(self, request, *args, **kwargs):
-        pdf = render_pdf('ticket.html', data)
+        pdf = render_pdf('tickets/ticket.html', data)
         return HttpResponse(pdf, content_type='application/pdf')
 
 
