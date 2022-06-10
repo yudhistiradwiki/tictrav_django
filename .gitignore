@@ -1,3 +1,4 @@
+.env
 tictravenv/*
 pa_tictrav/model_development/model/qas/*
 !pa_tictrav/model_development/model/qas/klasifikasi

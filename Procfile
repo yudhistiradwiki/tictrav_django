@@ -1,0 +1,1 @@
+web: gunicorn pa_tictrav.wsgi --log-file -
