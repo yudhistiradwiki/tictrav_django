@@ -20,7 +20,17 @@
     
                 {% if user.is_authenticated %}
                     <li class="nav__item">
-                        <a href="{% url 'tictrav:keluar' %}" class="nav__link">{{ user }}</a>
+                        <button id='dropdown' class="nav__link" style="background-color:inherit">{{ user }}</button>
+
+                        <div id="dropdown_content" class="dropdown-content">
+                            <ul>
+                                <li><a href="{% url 'tictrav:editProfile' %}">Edit Profile</a></li>
+                                <li><a href="{% url 'tictrav:personalisasi' %}">Edit Personalization</a></li>
+                                <li><a href="{% url 'tictrav:keluar' %}">Log out</a></li>
+                            </ul>
+                            
+                        </div>
+                        
                     </li>
                 {% else %}
                     <li class="nav__item">
@@ -43,4 +53,11 @@
             <i class="ri-function-line"></i>
         </div>
     </nav>
+    <script>
+        document.getElementById('dropdown').addEventListener('click',function(){
+               document.getElementById('dropdown_content').classList.toggle("active-dropdown");
+
+
+        })
+    </script>
 </header>

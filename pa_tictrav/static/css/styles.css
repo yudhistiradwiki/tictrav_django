@@ -1076,4 +1076,24 @@ input {
   text-decoration-style: solid;
 }
 
+@keyframes slide-down {
+  0% {opacity: 0;transform: translateY(-20px);}
+  100% {opacity: 1;transform: translateY(0px);}
+}
+
+.dropdown-content{
+  position: absolute;
+  background-color: white;
+  padding: 1.5%;
+  border-radius: 10px;
+  display: none;
+}
+
+.active-dropdown{
+  display: block!important;
+  animation: slide-down .4s;
+}
+
+
+
 
