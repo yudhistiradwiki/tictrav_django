@@ -15,6 +15,7 @@ urlpatterns = [
     path('ticketpdf/', views.ViewPDF.as_view(), name="pdf_view"),
     path('kota-<str:city>/', views.getWisataByKota, name='cityWisata'),
     path('reservasi-tempat-wisata/<int:placeid>/', views.reservasi, name='reservasiTiket'),
+    path('rate/<int:placeid>/', views.ratePlace, name='rate'),
 
     # Akun
     path('login/', authView.LoginView.as_view(), name='masuk'),

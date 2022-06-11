@@ -2,6 +2,7 @@
 {% block title %}{{data.place_name}}{% endblock %}
 {% load static %}
         {% block content %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/rating.css' %}">
         <main class="main">
             <!--==================== HOME ====================-->
             <section class="home" id="home">
@@ -51,7 +52,7 @@
                         </p>
                         <a href="{% url 'tictrav:reservasiTiket' data.place_id %}" class="button">Pesan Tiket</a>
                     </div>
-    
+
                     <div class="about__img">
                         <div class="about__img-overlay">
                             <img src="{{data.img.url}}" alt="" class="about__img-one">
@@ -60,6 +61,60 @@
                         <div class="about__img-overlay">
                             <img src="{{data.img.url}}" alt="" class="about__img-two">
                         </div>
+                    </div>
+                </div>
+
+                <div class="about__container container grid">
+                    <div>
+                        <form action="{% url 'tictrav:rate' data.place_id %}" class="rating" method="POST">
+                            {% csrf_token %}
+                            <div>
+                              <label>
+                                <input type="radio" name="stars" value="1" />
+                                <span class="icon">★</span>
+                              </label>
+                              <label>
+                                <input type="radio" name="stars" value="2" />
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                              </label>
+                              <label>
+                                <input type="radio" name="stars" value="3" />
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>   
+                              </label>
+                              <label>
+                                <input type="radio" name="stars" value="4" />
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                              </label>
+                              <label>
+                                <input type="radio" name="stars" value="5" />
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                              </label>  
+                            </div>
+                              
+                            <div class="form__field">
+                              <textarea id="comments" name="comments" rows="4" cols="50" placeholder="Bagikan pengalamanmu" style="width: 517px; height: 253px;"></textarea>
+                            </div>
+                            <input type="submit" value="Kirim" class="button">
+
+                            {% if messages %}
+                                <span style="color:#f44;font-size: 1.2rem;">
+                                  {% for message in messages%}
+                                    {{message}}
+                                  {% endfor %}
+                                </span>
+                            {% endif %}
+                                
+                        </form>
                     </div>
                 </div>
             </section>
@@ -237,5 +292,10 @@
                 </div>
             </section>
         </main>
+        <script>
+            $(':radio').change(function() {
+                console.log('New star rating: ' + this.value);
+            });
+        </script>
 
         {% endblock %}

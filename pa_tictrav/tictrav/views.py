@@ -9,6 +9,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 
+# Exception
+from django.core.exceptions import PermissionDenied
+
 
 # Model DB tictrav
 from tictrav import models, forms
@@ -186,6 +189,21 @@ def reservasi(request,placeid):
 
     reservasi_form =  forms.ReservationForm(instance=request.user)
     return render(request, "pemesanan.html",{'reservation':reservasi_form,'tourism':tourism})
+
+@login_required(login_url=settings.LOGIN_URL)
+def ratePlace(request, placeid):
+    if request.method == 'POST':
+        reservation = models.Reservation.objects.filter(user_id=request.user.id, place_id=placeid, place_ratings=0)
+        if not reservation:
+            messages.add_message(request, messages.ERROR, 'Pengguna belum melakukan reservasi')
+        else:
+            for i, reserve in enumerate(reservation):
+                if((len(reservation)-i)==1):
+                    reserve.place_ratings = request.POST['stars']
+                    reserve.save()
+        return redirect(f'/desc/{placeid}')
+    raise PermissionDenied
+
 
 
 #Ticket
