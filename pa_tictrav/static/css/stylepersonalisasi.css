@@ -1113,3 +1113,7 @@ html {
     padding-right: 1.5em;
 
 }
+
+footer{
+  top: 50%;
+}

@@ -71,7 +71,7 @@
           {% if messages %}
             <span style="color:#f44;">
               {% for message in messages%}
-                {{message}}
+                {{message|safe}}
               {% endfor %}
             </span>
           {% endif %}

@@ -1094,6 +1094,37 @@ input {
   animation: slide-down .4s;
 }
 
+.comments-card{
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+
+/* width */
+.comment-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.comment-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.comment-scrollbar::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+.comment-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+.comment-text{
+  font-size: 0.85rem;
+}
+
 
 
 

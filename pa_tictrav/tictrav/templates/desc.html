@@ -1,17 +1,17 @@
 {% extends 'template.html' %}
-{% block title %}{{data.place_name}}{% endblock %}
+{% block title %}{{data.place_name|safe}}{% endblock %}
 {% load static %}
         {% block content %}
         <link rel="stylesheet" type="text/css" href="{% static 'css/rating.css' %}">
         <main class="main">
             <!--==================== HOME ====================-->
             <section class="home" id="home">
-                <img src="{{data.img.url}}" alt="" class="home__img">
+                <img src="{{data.img.url|safe}}" alt="" class="home__img">
     
                 <div class="home__container container grid">
                     <div class="home__data">
                         <span class="home__data-subtitle">Deskripsi Wisata</span>
-                        <h1 class="home__data-title">Jelajahi<br> {{data.place_name}} <br><b> {{data.city}} Indonesia</b></h1>
+                        <h1 class="home__data-title">Jelajahi<br> {{data.place_name|safe}} <br><b> {{data.city|safe}} Indonesia</b></h1>
                         <a href="#about" class="button">Explore</a>
     
                     </div>
@@ -47,25 +47,25 @@
             <section class="about section" id="about">
                 <div class="about__container container grid">
                     <div class="about__data">
-                        <h2 class="section__title about__title">Informasi <br> {{data.place_name}} {{data.city}} </h2>
-                        <p class="about__description" style="text-align: justify;">{{data.description|truncatechars:1090}}
+                        <h2 class="section__title about__title">Informasi <br> {{data.place_name|safe}} {{data.city|safe}} </h2>
+                        <p class="about__description" style="text-align: justify;">{{data.description|truncatechars:1090|safe}}
                         </p>
                         <a href="{% url 'tictrav:reservasiTiket' data.place_id %}" class="button">Pesan Tiket</a>
                     </div>
 
                     <div class="about__img">
                         <div class="about__img-overlay">
-                            <img src="{{data.img.url}}" alt="" class="about__img-one">
+                            <img src="{{data.img.url|safe}}" alt="" class="about__img-one">
                         </div>
     
                         <div class="about__img-overlay">
-                            <img src="{{data.img.url}}" alt="" class="about__img-two">
+                            <img src="{{data.img.url|safe}}" alt="" class="about__img-two">
                         </div>
                     </div>
                 </div>
 
                 <div class="about__container container grid">
-                    <div>
+                    <div class="about__data">
                         <form action="{% url 'tictrav:rate' data.place_id %}" class="rating" method="POST">
                             {% csrf_token %}
                             <div>
@@ -102,19 +102,40 @@
                             </div>
                               
                             <div class="form__field">
-                              <textarea id="comments" name="comments" rows="4" cols="50" placeholder="Bagikan pengalamanmu" style="width: 517px; height: 253px;"></textarea>
+                              <textarea id="comments" name="comments" rows="4" cols="50" placeholder="Bagikan pengalamanmu"></textarea>
                             </div>
                             <input type="submit" value="Kirim" class="button">
 
                             {% if messages %}
                                 <span style="color:#f44;font-size: 1.2rem;">
                                   {% for message in messages%}
-                                    {{message}}
+                                    {{message|safe}}
                                   {% endfor %}
                                 </span>
-                            {% endif %}
-                                
+                            {% endif %}      
                         </form>
+                    </div>
+                    <div class="about__data comment-scrollbar" style="padding:10px;height: 253px;overflow-y: scroll;">
+                        <h4>Comments</h4>
+                        {% for comment in comments %}
+                            <div class="about__img-overlay comments-card">
+                                <span class="place__rating comment-text">
+                                    <i class="ri-star-line place__rating-icon"></i>
+                                    {% if comment.place_ratings > 0 %}
+                                        <span class="place__rating-number">{{comment.place_ratings|safe}}</span>
+                                    {% endif %}
+                                </span>
+                                
+                                <span class="comment-text">
+                                    {{comment.user.email|safe}}
+                                </span>
+                                {% if comment.comments %}
+                                    <div class="place__data">
+                                        <h5 style="color:black;comment-text">{{comment.comments|safe}}</h5>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
             </section>
@@ -228,17 +249,17 @@
                     <!--==================== PLACES CARD 1 ====================-->
                     {% for recommend in recommend|dictsortreversed:'rating' %}
                     <div class="place__card">  
-                        <img style= "width : 166px"src="{{recommend.img.url}}" alt="" class="place__img">
+                        <img style= "width : 166px"src="{{recommend.img.url|safe}}" alt="" class="place__img">
                         
                         <div class="place__content">
                             <span class="place__rating">
                                 <i class="ri-star-line place__rating-icon"></i>
-                                <span class="place__rating-number">{{recommend.rating}}</span>
+                                <span class="place__rating-number">{{recommend.rating|safe}}</span>
                             </span>
     
                             <div class="place__data">
                                 <h3 class="place__title">
-                                    {{recommend.place_name}}, {{recommend.city}} </h3>
+                                    {{recommend.place_name|safe}}, {{recommend.city|safe}} </h3>
                                 <span class="place__subtitle">Indonesia</span>
                             </div>
                         </div>

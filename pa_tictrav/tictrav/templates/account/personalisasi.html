@@ -15,8 +15,8 @@
 					{% regroup categories|dictsort:'category' by category as categoryList%}
 					{% for category in categoryList%}
 						<div class="form-group">
-							<input type="checkbox" class="form-control" id="category-{{forloop.counter}}" name="kategori" value="{{category.grouper}}" {% if category.grouper in personal %} checked {% endif %}>
-							<label for="category-{{forloop.counter}}">{{category.grouper}}</label><br>
+							<input type="checkbox" class="form-control" id="category-{{forloop.counter}}" name="kategori" value="{{category.grouper|safe}}" {% if category.grouper in personal %} checked {% endif %}>
+							<label for="category-{{forloop.counter}}">{{category.grouper|safe}}</label><br>
 						</div>
 					{% endfor %}
 					<div class="form-group">

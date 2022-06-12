@@ -31,7 +31,7 @@
                         <div>
                             <span class="home__info-title">5 best places to visit in Indonesia</span>
                             {% with tourism|dictsortreversed:'rating'|first as tourism %}
-                                <a href="/desc/{{ tourism.place_id }}" class="button button--flex button--link home__info-button">
+                                <a href="/desc/{{ tourism.place_id|safe }}" class="button button--flex button--link home__info-button">
                                     More <i class="ri-arrow-right-line"></i>
                                 </a>
                             {% endwith %}
@@ -52,18 +52,18 @@
                         {% for recommend in recommend|dictsortreversed:'rating' %}
                             <!--==================== PLACES CARD 1 ====================-->
                             <div class="place__card">
-                                <img src="{{recommend.img.url}}" alt="picture-{{recommend.place_name}}" width="467" height="263" class="place__img">
+                                <img src="{{recommend.img.url|safe}}" alt="picture-{{recommend.place_name|safe}}" width="467" height="263" class="place__img">
                                 
                                 <div class="place__content">
                                     <span class="place__rating">
                                         <i class="ri-star-line place__rating-icon"></i>
-                                        <span class="place__rating-number">{{recommend.rating}}</span>
+                                        <span class="place__rating-number">{{recommend.rating|safe}}</span>
                                     </span>
 
                                     <div class="place__data">
-                                        <h3 class="place__title">{{recommend.place_name}}, {{recommend.city}}</h3>
+                                        <h3 class="place__title">{{recommend.place_name|safe}}, {{recommend.city|safe}}</h3>
                                         <span class="place__subtitle">Indonesia</span>
-                                        <span class="place__price">Rp {{recommend.price}},-</span>
+                                        <span class="place__price">Rp {{recommend.price|safe}},-</span>
                                     </div>
                                 </div>
 
@@ -110,10 +110,10 @@
                             <!--==================== DISCOVER 1 ====================-->
                             <div id="{{ forloop.counter }}" class="discover__card swiper-slide">
                                 {% with tourism|first as first_city %}
-                                    <img src="{{first_city.img.url}}" alt="" class="discover__img">
+                                    <img src="{{first_city.img.url|safe}}" alt="" class="discover__img">
                                 {% endwith %}
                                 <div class="discover__data">
-                                    <h2 class="discover__title">{{cities}}</h2>
+                                    <h2 class="discover__title">{{cities|safe}}</h2>
                                     <span class="discover__description">
                                             {{ tourism|length }} tours available
                                     </span>

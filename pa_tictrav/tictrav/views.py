@@ -102,6 +102,8 @@ def desc(request, placeid):
     global model_statictis_item
     tourism = models.TourismPlace.objects.get(place_id=placeid)
 
+    comments = models.Reservation.objects.select_related().filter(place_id=placeid)
+
     # Inisialisasi model hanya sekali
     if model_statictis_item == None:
         reservation = models.Reservation.objects.values_list('user','place','place_ratings')
@@ -112,7 +114,7 @@ def desc(request, placeid):
     recommend = model_statictis_item.itemRecommendedByItem(tourism.place_id, 5)
     recommend = models.TourismPlace.objects.filter(pk__in=recommend)
 
-    return render(request, "desc.html", {'data':tourism, 'recommend':recommend})
+    return render(request, "desc.html", {'data':tourism, 'recommend':recommend, 'comments':comments})
 
 
 @login_required(login_url=settings.LOGIN_URL)
@@ -193,13 +195,14 @@ def reservasi(request,placeid):
 @login_required(login_url=settings.LOGIN_URL)
 def ratePlace(request, placeid):
     if request.method == 'POST':
-        reservation = models.Reservation.objects.filter(user_id=request.user.id, place_id=placeid, place_ratings=0)
+        reservation = models.Reservation.objects.filter(user_id=request.user.id, place_id=placeid)
         if not reservation:
             messages.add_message(request, messages.ERROR, 'Pengguna belum melakukan reservasi')
         else:
             for i, reserve in enumerate(reservation):
                 if((len(reservation)-i)==1):
                     reserve.place_ratings = request.POST['stars']
+                    reserve.comments = request.POST['comments']
                     reserve.save()
         return redirect(f'/desc/{placeid}')
     raise PermissionDenied

@@ -20,32 +20,32 @@
 									<div class="col-sm-6">
 										<div class="form-group">
 											<span class="form-label">Name</span>
-											<input class="form-control" type="text" placeholder="Enter your name" name="fullname" value="{{user.full_name}}">
+											<input class="form-control" type="text" placeholder="Enter your name" name="fullname" value="{{user.full_name|safe}}">
 										</div>
 									</div>
 									<div class="col-sm-6">
 										<div class="form-group">
 											<span class="form-label">Email</span>
-											<input class="form-control" type="email" placeholder="Enter your email" name="email" value="{{user.email}}">
+											<input class="form-control" type="email" placeholder="Enter your email" name="email" value="{{user.email|safe}}">
 										</div>
 									</div>
 								</div>
 								<div class="form-group">
 									<span class="form-label">Phone</span>
-									<input class="form-control" type="tel" placeholder="Enter your phone number" name="phone" value="{{user.phone_number}}">
+									<input class="form-control" type="tel" placeholder="Enter your phone number" name="phone" value="{{user.phone_number|safe}}">
 								</div>
 								<div class="form-group">
 									<span class="form-label">Pickup Location</span>
-									<input class="form-control" type="text" placeholder="Enter ZIP/Location" name="location" value="{{user.location}}">
+									<input class="form-control" type="text" placeholder="Enter ZIP/Location" name="location" value="{{user.location|safe}}">
 								</div>
 								<div class="form-group">
 									<span class="form-label">Destination</span>
-									<input class="form-control" type="text" placeholder="Enter ZIP/Location" value="{{tourism.place_name}} - {{tourism.city}}" readonly disabled>
+									<input class="form-control" type="text" placeholder="Enter ZIP/Location" value="{{tourism.place_name|safe}} - {{tourism.city|safe}}" readonly disabled>
 								</div>
 
 								<div class="form-group">
 									<span class="form-label">Pickup Date</span>
-									{{reservation.due_date}}
+									{{reservation.due_date|safe}}
 								</div>
 
 								<div class="form-btn">

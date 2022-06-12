@@ -1,28 +1,28 @@
 {% extends 'template.html' %}
 {% load static %}
-{% block title %}Wisata {{city}}{% endblock %}
+{% block title %}Wisata {{city|safe}}{% endblock %}
 
 {% block content %}
 <body class="align" style="margin: 50px;background-image:url({% static 'img/homebali.jpg' %});background-repeat:no-repeat;background-attachment: fixed;background-size: cover;">
     <section class="place section" id="place">
-    	<h1 style="font-size:5rem;color:white;text-align:center;margin-bottom:5%;">{{city}}</h1>
+    	<h1 style="font-size:5rem;color:white;text-align:center;margin-bottom:5%;">{{city|safe}}</h1>
         <div class="row" style="display: flex;flex-wrap: wrap;">
             {% for tourism in tourism|dictsortreversed:'rating' %}
                 <!--==================== PLACES CARD 1 ====================-->
                 <div class="place__card" style="margin: 1% auto;box-shadow: rgb(0 0 0 / 60%) 0px 19px 38px, rgb(0 0 0 / 60%) 0px 15px 12px;">
-                    <img src="{{tourism.img.url}}" alt="" class="place__img" width="350" height="350">
+                    <img src="{{tourism.img.url|safe}}" alt="" class="place__img" width="350" height="350">
                     
                     <div class="place__content">
                         <span class="place__rating">
                             <i class="ri-star-line place__rating-icon"></i>
-                            <span class="place__rating-number">{{tourism.rating}}</span>
+                            <span class="place__rating-number">{{tourism.rating|safe}}</span>
                         </span>
 
                         <div class="place__data" style="    background-color: rgba(1,1,1,.6);padding: 5%;border-radius: 20px;">
-                            <h3 class="place__title">{{tourism.place_name}}</h3>
+                            <h3 class="place__title">{{tourism.place_name|safe}}</h3>
                             <span class="place__subtitle">Indonesia</span>
-                            <span class="place__price">Rp {{tourism.price}},-</span>
-                            <p>{{tourism.description|truncatechars:100}}</p>
+                            <span class="place__price">Rp {{tourism.price|safe}},-</span>
+                            <p>{{tourism.description|truncatechars:100|safe}}</p>
                         </div>
                     </div>
 
