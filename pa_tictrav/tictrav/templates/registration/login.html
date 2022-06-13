@@ -6,7 +6,9 @@
   <head>
     <meta charset="UTF-8">
     <!--<title> Login and Registration Form in HTML & CSS | CodingLab </title>-->
-    <link rel="stylesheet" href="{% static 'reg/style.css' %}">
+    <link rel="stylesheet" href="{% static 'reg/stylee.css' %}">
+    <title>TicTrav - Login</title>
+    <link rel="shortcut icon" href="{% static 'img/icon2.png' %}" type="image/png">
     <!-- Fontawesome CDN Link -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,7 +44,7 @@
 
             {% if form.errors %}
               <span style="color:#f44;">
-                Akun atau password yang diinput salah.
+                Sorry, Wrong email or password.
               </span>
             {% endif %}
 
@@ -50,12 +52,12 @@
             {% csrf_token %}
             <div class="input-boxes">
               <div class="input-box">
-                <i class="fas fa-user"></i>
-                <input type="text" placeholder="Nama Pengguna" name="username" required id="id_username" required>
+                <i class="fas fa-envelope"></i>
+                <input type="text" placeholder="Email" name="username" required id="id_username" required>
               </div>
               <div class="input-box">
                 <i class="fas fa-lock"></i>
-                <input type="password" placeholder="Kata Sandi" name="password" required id="id_password" required>
+                <input type="password" placeholder="Password" name="password" required id="id_password" required>
               </div>
               <div class="text"><a href="{% url 'tictrav:password_reset' %}">Forgot password?</a></div>
               <div class="button input-box">

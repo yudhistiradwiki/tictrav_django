@@ -6,16 +6,16 @@
         <div class="nav__menu" id="nav-menu">
             <ul class="nav__list">
                 <li class="nav__item">
-                    <a href="{% url 'tictrav:home' %}" class="nav__link active-link">Beranda</a>
+                    <a href="{% url 'tictrav:home' %}" class="nav__link active-link">Home</a>
                 </li>
                 <li class="nav__item">
-                    <a href="#place" class="nav__link">Rekomendasi</a>
+                    <a href="#place" class="nav__link">Recommendation</a>
                 </li>
                 <li class="nav__item">
-                    <a href="#about" class="nav__link">Tentang</a>
+                    <a href="#about" class="nav__link">About</a>
                 </li>
                 <li class="nav__item">
-                    <a href="#discover" class="nav__link">Kota Pariwisata</a>
+                    <a href="#discover" class="nav__link">City</a>
                 </li>
     
                 {% if user.is_authenticated %}
@@ -27,7 +27,6 @@
                                 <li><a href="{% url 'tictrav:editProfile' %}">Edit Profile</a></li>
                                 <li><a href="{% url 'tictrav:personalisasi' %}">Edit Personalization</a></li>
                                 <li><a href="{% url 'tictrav:keluar' %}">Log out</a></li>
-                                <li><a href="{% url 'tictrav:ticket' %}">ticket</a></li>
                             </ul>
                             
                         </div>
@@ -35,7 +34,7 @@
                     </li>
                 {% else %}
                     <li class="nav__item">
-                        <a href="{% url 'tictrav:masuk' %}" class="nav__link">Masuk Akun</a>
+                        <a href="{% url 'tictrav:masuk' %}" class="nav__link">Login</a>
                     </li>
                 {% endif %}
                 
