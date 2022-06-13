@@ -232,7 +232,6 @@ def ticket(request):
     reservation = models.Reservation.objects.select_related().filter(user_id=request.user.id)
     for i, reserve in enumerate(reservation):
         if((len(reservation)-i)==1):
-            print(reserve.place.place_name)
             data = {
                 "nama" : request.user.full_name,
                 "wisata" :reserve.place.place_name,
