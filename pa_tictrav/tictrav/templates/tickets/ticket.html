@@ -20,30 +20,30 @@
                 </p>
                 <div class="ticket-number">
                     <p>
-                        #20030220
+                        #{{reservasi_id}} 
                     </p>
                 </div>
             </div>
             <div class="ticket-info">
                 <p class="date">
-                    <span>HARI MINGGU</span>
-                    <span class="june-29">15 MEI</span>
-                    <span>2022</span>
+                    <span>{{ time|date:"m-d" }}</span>
+                    <span class="june-29">{{time|time:"h:i a"}}</span>
+                    <span>{{ time|date:"Y" }}</span>
                 </p>
                 <div class="show-name">
                     <h1>ONLINE TICKET</h1>
-                    <h2>Dwiki Yudhistira</h2>
+                    <h2>{{nama}}</h2>
                 </div>
                 <div class="time">
                     <p>8:00 <span>s/d</span> 15:00 WIB</p>
                     <p>Minggu tutup jam 15.00 WIB</p>
                 </div>
                 <p class="location">
-                    <span>Monumen Nasional</span>
+                    <span>{{wisata}}</span>
 
                     <span class="separator"><i class="far fa-smile"></i></span>
                     
-                    <span>DKI Jakarta</span>
+                    <span>{{city}}</span>
                 </p>
 
             </div>
@@ -67,7 +67,7 @@
                     <img src="{% static 'qr.png' %}" alt="">
                 </div>
                 <p class="ticket-number">
-                    #20030220
+                    #{{reservasi_id}} 
                 </p>
             </div>
         </div>

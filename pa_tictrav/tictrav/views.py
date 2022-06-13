@@ -1,4 +1,5 @@
 from ctypes.wintypes import INT
+from select import select
 from django.shortcuts import render, redirect
 from django.http.response import HttpResponse
 from io import BytesIO
@@ -186,7 +187,7 @@ def reservasi(request,placeid):
         reservasi_user = models.Reservation.objects.create(user = request.user , place = tourism, due_date = request.POST['due_date']) 
         reservasi_user.save()
 
-        return redirect(f'/desc/{placeid}')
+        return redirect(f'/ticket/')
 
 
     reservasi_form =  forms.ReservationForm(instance=request.user)
@@ -219,10 +220,7 @@ def render_pdf(template_src, context_dict={}):
         return HttpResponse(result.getvalue(), content_type='application/pdf')
     return None
 
-data = {
-    "nama" : "Dwiki",
-    "wisata" : "Monumen Nasional"
-}
+
 
 class ViewPDF(View):
     def get(self, request, *args, **kwargs):
@@ -231,7 +229,18 @@ class ViewPDF(View):
 
 
 def ticket(request):
-     return render(request, 'ticket.html')
+    reservation = models.Reservation.objects.select_related().filter(user_id=request.user.id)
+    for i, reserve in enumerate(reservation):
+        if((len(reservation)-i)==1):
+            print(reserve.place.place_name)
+            data = {
+                "nama" : request.user.full_name,
+                "wisata" :reserve.place.place_name,
+                "city" : reserve.place.city,
+                "reservasi_id":reserve.place, 
+                "time" : reserve.due_date
+            }
+    return render(request, 'tickets/ticket.html', data)
 
 
 # Custom error
