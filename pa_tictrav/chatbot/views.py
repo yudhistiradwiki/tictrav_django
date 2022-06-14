@@ -35,8 +35,8 @@ def getChatbotResponse(request):
 				chatbot = qas.chatbot(tourism)
 			except:
 				response = 'Chatbot sedang tidak dapat digunakan. Mohon maaf atas ketidaknyamanannya.'
-			else:
-				response = chatbot.getJawaban(pertanyaan)
+		
+		response = chatbot.getJawaban(pertanyaan)
 				
 
 		return JsonResponse({
