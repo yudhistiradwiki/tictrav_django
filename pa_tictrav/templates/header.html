@@ -17,6 +17,10 @@
     
                 {% if user.is_authenticated %}
                     <li class="nav__item">
+                        <a href="#place" class="nav__link">Recommendation</a>
+                    </li>
+
+                    <li class="nav__item">
                         <button id='dropdown' class="nav__link" style="background-color:inherit">{{ user }}</button>
 
                         <div id="dropdown_content" class="dropdown-content">
