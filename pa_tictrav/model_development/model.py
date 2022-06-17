@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 # Statistik
-from scipy.stats.stats import pearsonr  
+# from scipy.stats.stats import pearsonr  
 
 
 # Model tensorflow
@@ -172,7 +172,7 @@ class colaborative_calculation_statistik:
     def userCorr(self,user1=0,user2=0):
         if(user1 and user2 == 0):
             return None
-        return pearsonr(self.__listUser[user1-1,1:],self.__listUser[user2-1,1:])[1]
+        return np.corrcoef(self.__listUser[user1-1,1:],self.__listUser[user2-1,1:])[1]
     
     # Cosine Similarity
     def userSimilarity(self,user1=0,user2=0):

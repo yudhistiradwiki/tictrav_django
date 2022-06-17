@@ -1,82 +1,77 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>CodePen - Movie Ticket</title>
-  <link href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,700" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-<link rel="stylesheet" href="assets/css/layout.css">
-
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link rel="stylesheet" href="{% static 'ticket/stylet.css' %}">
+    <link rel="shortcut icon" href="{% static 'img/icon2.png' %}" type="image/png">
+    <title>TicTrav - Ticket</title>
 </head>
 <body>
-<!-- partial:index.partial.html -->
-<!--
-Inspired by: https://dribbble.com/shots/1166639-Movie-Ticket/attachments/152161
--->
+    <div class="ticket">
+        <div class="left">
+            <div class="image">
+                <p class="admit-one">
+                    <span>TICTRAV</span>
+                    <span>TICTRAV</span>
+                    <span>TICTRAV</span>
+                </p>
+                <div class="ticket-number">
+                    <p>
+                        #{{reservasi_id}} 
+                    </p>
+                </div>
+            </div>
+            <div class="ticket-info">
+                <p class="date">
+                    <span>{{ time|date:"m-d" }}</span>
+                    <span class="june-29">{{time|time:"h:i a"}}</span>
+                    <span>{{ time|date:"Y" }}</span>
+                </p>
+                <div class="show-name">
+                    <h1>ONLINE TICKET</h1>
+                    <h2>{{nama}}</h2>
+                </div>
+                <div class="time">
+                    <p>8:00 <span>s/d</span> 15:00 WIB</p>
+                    <p>Minggu tutup jam 15.00 WIB</p>
+                </div>
+                <p class="location">
+                    <span>{{wisata}}</span>
 
-<div class="ticket">
-	<div class="holes-top"></div>
-	<div class="title">
-		<p class="cinema">Tiket</p>
-		<p class="movie-title">Dunia Fantasy, Jakarta</p>
-	</div>
-	<center>
-		<img src="assets/img/icon2.png" width="250" height="250"/>
-	</center>
-	<div class="info">
-	<table>
-		<tr>
-			<th>Name</th>
-		</tr>
-		<tr>
-			<td class="bigger">{{user.full_name|safe}}</td>
-		</tr>
-	</table>
-	<table>
-		<tr>
-			<th>PRICE</th>
-			<th>DATE</th>
-			<th>TIME</th>
-		</tr>
-		<tr>
-			<td>Rp.15.000</td>
-			<td>15/05/22</td>
-			<td>8:00</td>
-		</tr>
-	</table>
-	</div>
-	<div class="holes-lower"></div>
-	<div class="serial">
-		<table class="barcode"><tr></tr></table>
-		<table class="numbers">
-			<tr>
-				<td>9</td>
-				<td>1</td>
-				<td>7</td>
-				<td>3</td>
-				<td>7</td>
-				<td>5</td>
-				<td>4</td>
-				<td>4</td>
-				<td>4</td>
-				<td>5</td>
-				<td>4</td>
-				<td>1</td>
-				<td>4</td>
-				<td>7</td>
-				<td>8</td>
-				<td>7</td>
-				<td>3</td>
-				<td>4</td>
-				<td>1</td>
-				<td>4</td>
-				<td>5</td>
-				<td>2</td>
-			</tr>
-		</table>
-	</div>
-</div>
-<!-- partial -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script><script  src="assets/js/layout.js"></script>
+                    <span class="separator"><i class="far fa-smile"></i></span>
+                    
+                    <span>{{city}}</span>
+                </p>
 
+            </div>
+        </div>
+
+        <div class="right">
+            <p class="admit-one">
+                <span>TICTRAV</span>
+                <span>TICTRAV</span>
+                <span>TICTRAV</span>
+            </p>
+            <div class="right-info-container">
+                <div class="show-name">
+                    <h1>TICTRAV</h1>
+                </div>
+                <div class="time">
+                    <p>8:00 <span>s/d</span> 15:00 WIB</p>
+                    <p>Minggu tutup jam 15.00 WIB</p>
+                </div>
+                <div class="barcode">
+                    <img src="{% static 'qr.png' %}" alt="">
+                </div>
+                <p class="ticket-number">
+                    #{{reservasi_id}} 
+                </p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

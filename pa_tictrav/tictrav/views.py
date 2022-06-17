@@ -223,22 +223,28 @@ def render_pdf(template_src, context_dict={}):
 
 
 class ViewPDF(View):
-    def get(self, request, *args, **kwargs):
-        pdf = render_pdf('tickets/ticket.html', data)
+    def get(self, request):
+        reservation = models.Reservation.objects.select_related().filter(user_id=request.user.id).latest('time')
+        data = {
+            "nama" : request.user.full_name,
+            "wisata" :reservation.place.place_name,
+            "city" : reservation.place.city,
+            "reservasi_id":reservation.place, 
+            "time" : reservation.due_date
+        }
+        pdf = render_pdf('tickets/layoutticket.html', data)
         return HttpResponse(pdf, content_type='application/pdf')
 
 
 def ticket(request):
-    reservation = models.Reservation.objects.select_related().filter(user_id=request.user.id)
-    for i, reserve in enumerate(reservation):
-        if((len(reservation)-i)==1):
-            data = {
-                "nama" : request.user.full_name,
-                "wisata" :reserve.place.place_name,
-                "city" : reserve.place.city,
-                "reservasi_id":reserve.place, 
-                "time" : reserve.due_date
-            }
+    reservation = models.Reservation.objects.select_related().filter(user_id=request.user.id).latest('time')
+    data = {
+        "nama" : request.user.full_name,
+        "wisata" :reservation.place.place_name,
+        "city" : reservation.place.city,
+        "reservasi_id":reservation.place, 
+        "time" : reservation.due_date
+    }
     return render(request, 'tickets/ticket.html', data)
 
 
@@ -250,7 +256,4 @@ def handler500(request, template_name='error/500.html'):
     return render(request, template_name)
 
 def handler403(request, exception, template_name='error/403.html'):
-    return render(request, template_name)
-
-def handler400(request, exception, template_name='error/400.html'):
     return render(request, template_name)
